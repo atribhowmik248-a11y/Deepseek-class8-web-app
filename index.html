@@ -1,0 +1,2736 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+<meta name="description" content="Blossom — interactive MCQ flashcards and drag-and-drop fill-in-the-blanks for WBBSE Class 8 English (Blossoms lessons 2, 6, 9–13) and grammar." />
+<meta name="theme-color" content="#f6f1e7" id="metaTheme" />
+<title>Blossom · Class 8 English Flashcards</title>
+<script>
+  try {
+    var savedTheme = JSON.parse(localStorage.getItem("blossom-class8-deck-v1") || "{}").theme;
+    if (savedTheme === "dark" || (!savedTheme && window.matchMedia && window.matchMedia("(prefers-color-scheme: dark)").matches)) {
+      document.documentElement.classList.add("dark");
+    }
+  } catch (e) {}
+</script>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300..900;1,9..144,300..900&family=Plus+Jakarta+Sans:wght@300..800&display=swap" rel="stylesheet">
+<script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+<style>
+  :root {
+    --bg: #f6f1e7;
+    --bg-deep: #efe7d8;
+    --surface: #fffdf8;
+    --surface-2: #faf5eb;
+    --surface-3: #f1e9db;
+    --ink: #211d2f;
+    --ink-soft: #423b55;
+    --muted: #746d82;
+    --border: #e5dbc9;
+    --border-strong: #d8cbb5;
+    --primary: #4c43c7;
+    --primary-strong: #3c34b0;
+    --primary-ink: #ffffff;
+    --primary-soft: #e9e6ff;
+    --accent: #d98b2b;
+    --accent-soft: #fbeed7;
+    --correct: #2c7a58;
+    --correct-soft: #e4f4eb;
+    --correct-border: #b4dcc8;
+    --wrong: #b3453d;
+    --wrong-soft: #fbe8e4;
+    --wrong-border: #eec5be;
+    --hero-bg: #211c3c;
+    --hero-ink: #f8f2e7;
+    --shadow: 0 20px 50px -30px rgba(63, 46, 22, .35);
+    --shadow-lg: 0 34px 80px -40px rgba(50, 34, 12, .45);
+    --ring: rgba(76, 67, 199, .35);
+    --nav-bg: rgba(255, 253, 248, .9);
+    --wash-1: rgba(76, 67, 199, .11);
+    --wash-2: rgba(217, 139, 43, .12);
+  }
+  .dark {
+    --bg: #0d0f17;
+    --bg-deep: #090b11;
+    --surface: #161925;
+    --surface-2: #1c2030;
+    --surface-3: #24293b;
+    --ink: #f3efe7;
+    --ink-soft: #d9d4c9;
+    --muted: #a09bb1;
+    --border: #2a2f42;
+    --border-strong: #3a4056;
+    --primary: #a79dff;
+    --primary-strong: #bdb5ff;
+    --primary-ink: #171327;
+    --primary-soft: #272346;
+    --accent: #f0b45f;
+    --accent-soft: #35291b;
+    --correct: #7bd9ad;
+    --correct-soft: #152e25;
+    --correct-border: #295744;
+    --wrong: #f29a91;
+    --wrong-soft: #361f20;
+    --wrong-border: #5f3535;
+    --hero-bg: #171a2a;
+    --hero-ink: #f7f2e8;
+    --shadow: 0 20px 50px -30px rgba(0, 0, 0, .75);
+    --shadow-lg: 0 34px 90px -40px rgba(0, 0, 0, .9);
+    --ring: rgba(167, 157, 255, .45);
+    --nav-bg: rgba(22, 25, 37, .93);
+    --wash-1: rgba(120, 107, 255, .13);
+    --wash-2: rgba(240, 180, 95, .07);
+  }
+  * { box-sizing: border-box; }
+  html { scroll-behavior: smooth; -webkit-text-size-adjust: 100%; }
+  body {
+    margin: 0;
+    min-height: 100vh;
+    background-color: var(--bg);
+    background-image:
+      radial-gradient(58rem 36rem at 108% -8%, var(--wash-1), transparent 62%),
+      radial-gradient(42rem 28rem at -12% 14%, var(--wash-2), transparent 60%);
+    background-attachment: fixed;
+    color: var(--ink);
+    font-family: "Plus Jakarta Sans", ui-sans-serif, system-ui, -apple-system, sans-serif;
+    -webkit-font-smoothing: antialiased;
+    line-height: 1.55;
+    transition: background-color .3s ease, color .3s ease;
+    padding-bottom: calc(74px + env(safe-area-inset-bottom));
+  }
+  body.studying { padding-bottom: 24px; }
+  ::selection { background: var(--primary); color: var(--primary-ink); }
+  button, input { font: inherit; color: inherit; }
+  button { cursor: pointer; }
+  button:focus-visible, a:focus-visible, input:focus-visible, [tabindex]:focus-visible {
+    outline: 3px solid var(--ring);
+    outline-offset: 2px;
+  }
+  h1, h2, h3, h4, p { margin: 0; }
+  [hidden], .is-hidden { display: none !important; }
+  .sr-only {
+    position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px;
+    overflow: hidden; clip: rect(0, 0, 0, 0); white-space: nowrap; border: 0;
+  }
+  .icon {
+    width: 1.25em; height: 1.25em; flex: none; display: inline-block; vertical-align: -0.18em;
+    fill: none; stroke: currentColor; stroke-width: 1.9; stroke-linecap: round; stroke-linejoin: round;
+    overflow: visible;
+  }
+  .shell { width: 100%; max-width: 1160px; margin-inline: auto; padding-inline: 16px; }
+  .display { font-family: "Fraunces", Georgia, "Times New Roman", serif; font-optical-sizing: auto; letter-spacing: -.025em; }
+  .eyebrow { font-size: .68rem; font-weight: 800; letter-spacing: .16em; text-transform: uppercase; }
+
+  /* ---------- Top bar ---------- */
+  .topbar {
+    position: sticky; top: 0; z-index: 50;
+    padding-top: env(safe-area-inset-top);
+    border-bottom: 1px solid color-mix(in srgb, var(--border) 80%, transparent);
+    background: color-mix(in srgb, var(--bg) 84%, transparent);
+    -webkit-backdrop-filter: blur(20px) saturate(1.3);
+    backdrop-filter: blur(20px) saturate(1.3);
+  }
+  .dark .deck-icon { color: color-mix(in srgb, var(--deck, var(--primary)) 68%, white); border-color: color-mix(in srgb, var(--deck, var(--primary)) 34%, transparent); }
+  .dark .tag.lesson { color: color-mix(in srgb, var(--card-accent, var(--primary)) 66%, white); }
+  .topbar-inner { min-height: 64px; display: flex; align-items: center; gap: 12px; }
+  .brand { display: flex; align-items: center; gap: 10px; background: none; border: 0; padding: 4px; margin-left: -4px; border-radius: 12px; text-align: left; }
+  .brand-mark {
+    width: 38px; height: 38px; border-radius: 12px; display: grid; place-items: center;
+    color: #fff8ec; flex: none;
+    background: linear-gradient(145deg, #5f53e0, #3a319e);
+    box-shadow: 0 6px 16px -6px rgba(55, 45, 170, .7), inset 0 1px rgba(255,255,255,.25);
+  }
+  .brand-mark .icon { width: 22px; height: 22px; }
+  .brand-title { display: block; font-family: "Fraunces", serif; font-weight: 700; font-size: 1.07rem; line-height: 1.05; letter-spacing: -.02em; }
+  .brand-sub { display: none; font-size: .63rem; font-weight: 700; letter-spacing: .09em; text-transform: uppercase; color: var(--muted); line-height: 1.4; }
+  .top-nav { display: none; align-items: center; gap: 2px; margin-inline: auto; }
+  .nav-link {
+    background: none; border: 0; border-radius: 999px; padding: 8px 14px;
+    font-size: .8rem; font-weight: 650; color: var(--muted); transition: .18s ease;
+  }
+  .nav-link:hover { color: var(--ink); background: var(--surface-2); }
+  .nav-link.is-active { color: var(--ink); background: var(--surface); box-shadow: inset 0 0 0 1px var(--border); }
+  .top-actions { display: flex; align-items: center; gap: 7px; margin-left: auto; }
+  .icon-btn {
+    width: 40px; height: 40px; border-radius: 12px; border: 1px solid var(--border);
+    background: var(--surface); color: var(--ink-soft); display: grid; place-items: center;
+    transition: transform .18s ease, background .18s ease, border-color .18s ease, color .18s ease;
+    touch-action: manipulation;
+  }
+  .icon-btn:hover { background: var(--surface-2); color: var(--ink); border-color: var(--border-strong); }
+  .icon-btn:active { transform: scale(.94); }
+  .icon-btn .icon { width: 19px; height: 19px; }
+  .theme-btn { position: relative; overflow: hidden; color: var(--primary); }
+  .theme-sun { display: none; }
+  .dark .theme-sun { display: block; }
+  .dark .theme-moon { display: none; }
+  .sound-off-icon { display: none; }
+  body.sfx-muted .sound-off-icon { display: block; }
+  body.sfx-muted .sound-on-icon { display: none; }
+
+  /* ---------- Buttons / chips ---------- */
+  .btn {
+    display: inline-flex; align-items: center; justify-content: center; gap: 9px;
+    min-height: 48px; padding: 0 20px; border-radius: 14px; border: 1px solid transparent;
+    font-weight: 750; font-size: .92rem; letter-spacing: -.01em; line-height: 1.2;
+    transition: transform .16s ease, background .16s ease, box-shadow .16s ease, border-color .16s ease;
+    touch-action: manipulation; text-decoration: none;
+  }
+  .btn:active { transform: translateY(1px) scale(.995); }
+  .btn .icon { width: 18px; height: 18px; }
+  .btn-primary {
+    background: var(--primary); color: var(--primary-ink);
+    box-shadow: 0 12px 24px -12px color-mix(in srgb, var(--primary) 75%, transparent);
+  }
+  .btn-primary:hover { background: var(--primary-strong); }
+  .btn-soft { background: var(--surface-2); border-color: var(--border); color: var(--ink); }
+  .btn-soft:hover { background: var(--surface-3); border-color: var(--border-strong); }
+  .btn-ghost { background: transparent; border-color: var(--border); color: var(--ink-soft); }
+  .btn-ghost:hover { background: var(--surface-2); color: var(--ink); }
+  .btn-accent { background: var(--accent-soft); color: var(--accent); border-color: color-mix(in srgb, var(--accent) 30%, transparent); }
+  .btn-sm { min-height: 38px; padding: 0 14px; font-size: .78rem; border-radius: 11px; }
+  .chip {
+    display: inline-flex; align-items: center; gap: 6px; padding: 8px 13px; min-height: 36px;
+    border-radius: 999px; border: 1px solid var(--border); background: var(--surface);
+    color: var(--muted); font-size: .76rem; font-weight: 700; white-space: nowrap;
+    transition: .18s ease;
+  }
+  .chip:hover { color: var(--ink); border-color: var(--border-strong); }
+  .chip.is-active { background: var(--ink); color: var(--surface); border-color: var(--ink); }
+  .chip .icon { width: 14px; height: 14px; }
+  .chip-count { opacity: .62; font-variant-numeric: tabular-nums; }
+
+  /* ---------- Hero ---------- */
+  .hero {
+    position: relative; overflow: hidden; color: var(--hero-ink);
+    background:
+      radial-gradient(48rem 30rem at 94% 0%, rgba(150, 128, 255, .55), transparent 58%),
+      radial-gradient(34rem 24rem at 8% 104%, rgba(223, 152, 56, .3), transparent 60%),
+      var(--hero-bg);
+    border-radius: 24px;
+    padding: 22px 18px;
+    margin-top: 14px;
+    box-shadow: var(--shadow-lg);
+    isolation: isolate;
+  }
+  .hero::before {
+    content: ""; position: absolute; width: 340px; height: 340px; right: -160px; top: -120px;
+    border-radius: 50%; border: 1px solid rgba(255,255,255,.18); pointer-events: none;
+  }
+  .hero::after {
+    content: ""; position: absolute; inset: 0; pointer-events: none; opacity: .05; z-index: -1;
+    background-image: radial-gradient(#fff 1px, transparent 1px);
+    background-size: 18px 18px;
+  }
+  .hero-grid { display: grid; gap: 24px; align-items: center; }
+  .hero-copy { min-width: 0; }
+  .hero-badge {
+    display: inline-flex; align-items: center; gap: 7px; border: 1px solid rgba(255,255,255,.2);
+    background: rgba(255,255,255,.09); border-radius: 999px; padding: 6px 11px;
+    color: #f4e9d5; font-size: .63rem; font-weight: 800; letter-spacing: .1em; text-transform: uppercase;
+    backdrop-filter: blur(8px);
+  }
+  .hero-badge .icon { width: 14px; height: 14px; color: #f6c577; }
+  .hero h1 {
+    font-family: "Fraunces", serif; font-weight: 550; font-optical-sizing: auto;
+    font-size: clamp(2.15rem, 10.5vw, 3.9rem); line-height: .98; letter-spacing: -.045em;
+    margin: 16px 0 12px; max-width: 12ch; text-wrap: balance;
+  }
+  .hero h1 em { font-style: italic; color: #f3c580; position: relative; }
+  .hero-lede { color: rgba(248, 243, 233, .78); font-size: .9rem; line-height: 1.65; max-width: 44ch; }
+  .hero-lede strong { color: #fff; font-weight: 750; }
+  .mode-switch {
+    display: grid; grid-template-columns: repeat(3, 1fr); gap: 4px; padding: 4px;
+    background: rgba(255,255,255,.1); border: 1px solid rgba(255,255,255,.17);
+    border-radius: 14px; margin: 20px 0 12px; max-width: 430px;
+  }
+  .mode-btn {
+    border: 0; background: transparent; color: rgba(255,255,255,.72); min-height: 38px;
+    border-radius: 10px; padding: 5px 4px; font-size: .72rem; font-weight: 750;
+    display: flex; align-items: center; justify-content: center; gap: 5px; transition: .18s ease;
+  }
+  .mode-btn .icon { width: 14px; height: 14px; }
+  .mode-btn:hover { color: #fff; background: rgba(255,255,255,.06); }
+  .mode-btn.is-active { background: #fbf5e8; color: #2b2340; box-shadow: 0 3px 10px rgba(0,0,0,.18); }
+  .hero-cta { display: flex; flex-wrap: wrap; gap: 9px; }
+  .hero .btn-primary { background: #f8efdd; color: #28203d; box-shadow: 0 12px 28px -14px rgba(0,0,0,.7); flex: 1 1 210px; }
+  .hero .btn-primary:hover { background: #fffaf0; }
+  .hero .btn-ghost { border-color: rgba(255,255,255,.24); color: #f7f1e6; background: rgba(255,255,255,.06); }
+  .hero .btn-ghost:hover { background: rgba(255,255,255,.13); border-color: rgba(255,255,255,.36); }
+  .hero .btn-ghost .icon { color: #f3c580; }
+  .hero-stats { display: flex; flex-wrap: wrap; gap: 6px 16px; margin-top: 18px; color: rgba(255,255,255,.66); font-size: .7rem; font-weight: 600; }
+  .hero-stats span { display: inline-flex; align-items: center; gap: 6px; }
+  .hero-stats b { color: #fff; font-weight: 800; font-variant-numeric: tabular-nums; }
+  .hero-stats .icon { width: 13px; height: 13px; color: #f3c580; }
+
+  /* Hero deck art */
+  .hero-art { position: relative; min-height: 265px; display: none; }
+  .art-stage { position: absolute; inset: 0; }
+  .art-card {
+    position: absolute; border-radius: 18px; background: #fffbf2; color: #241f35;
+    border: 1px solid rgba(255,255,255,.6); box-shadow: 0 22px 50px -20px rgba(0,0,0,.7);
+    padding: 16px;
+  }
+  .art-card-back {
+    inset: 42px 8% 24px 12%; transform: rotate(9deg);
+    background: linear-gradient(145deg, #d9cfc0, #f3ead9); opacity: .55;
+  }
+  .art-card-mid {
+    inset: 28px 5% 36px 7%; transform: rotate(-6deg);
+    background: linear-gradient(145deg, #f2e6cf, #fff9ec); opacity: .82;
+  }
+  .art-card-front { inset: 22px 3% 28px 4%; transform: rotate(1.5deg); display: flex; flex-direction: column; }
+  .art-top { display: flex; align-items: center; justify-content: space-between; gap: 8px; padding-bottom: 10px; border-bottom: 1px solid #ede3d1; }
+  .art-lesson { font-size: .58rem; font-weight: 800; text-transform: uppercase; letter-spacing: .11em; color: #7b6a98; display: flex; align-items: center; gap: 5px; }
+  .art-lesson .icon { width: 13px; height: 13px; color: #4f46c9; }
+  .art-bookmark { color: #b09a79; }
+  .art-bookmark .icon { width: 15px; height: 15px; }
+  .art-eyebrow { margin-top: 13px; font-size: .56rem; font-weight: 800; text-transform: uppercase; letter-spacing: .13em; color: #a18d6c; }
+  .art-quote { font-family: "Fraunces", serif; font-size: clamp(1.22rem, 2.4vw, 1.55rem); line-height: 1.16; letter-spacing: -.03em; margin: 4px 0 8px; color: #282037; }
+  .art-q { font-size: .67rem; color: #83758c; font-weight: 600; margin-bottom: 8px; }
+  .art-options { display: grid; gap: 5px; }
+  .art-option { display: flex; align-items: center; justify-content: space-between; gap: 5px; font-size: .65rem; font-weight: 700; border-radius: 7px; padding: 5px 8px; background: #f8f1e4; color: #6d6276; border: 1px solid #eee4d4; }
+  .art-option.is-right { background: #e2f3e9; border-color: #b9deca; color: #286349; }
+  .art-option .icon { width: 11px; height: 11px; }
+  .art-foot { margin-top: auto; display: flex; align-items: center; justify-content: space-between; padding-top: 9px; border-top: 1px solid #ede3d1; font-size: .56rem; font-weight: 700; color: #a0917d; }
+  .art-wave { display: flex; align-items: center; gap: 2px; height: 12px; }
+  .art-wave i { width: 2px; border-radius: 2px; background: #8b7bd0; animation: wave 1s ease-in-out infinite; }
+  .art-wave i:nth-child(2) { animation-delay: .12s; }
+  .art-wave i:nth-child(3) { animation-delay: .24s; }
+  .art-wave i:nth-child(4) { animation-delay: .36s; }
+  .art-wave i:nth-child(5) { animation-delay: .48s; }
+  .float-badge {
+    position: absolute; z-index: 3; display: inline-flex; align-items: center; gap: 6px;
+    background: rgba(255, 252, 245, .97); color: #2d2540; border-radius: 10px;
+    padding: 7px 10px; font-size: .59rem; font-weight: 800; box-shadow: 0 10px 24px -10px rgba(0,0,0,.6);
+    border: 1px solid rgba(255,255,255,.7); animation: softFloat 5s ease-in-out infinite;
+  }
+  .float-badge .icon { width: 14px; height: 14px; color: #2c7a58; }
+  .float-badge.badge-audio { right: -2px; bottom: 14px; animation-delay: 1.2s; }
+  .float-badge.badge-audio .icon { color: #d98b2b; }
+  .float-badge.badge-points { left: -8px; top: 2px; }
+  .float-badge.badge-points .icon { color: #4c43c7; }
+
+  /* ---------- Progress panel ---------- */
+  .progress-panel {
+    display: grid; gap: 14px; background: var(--surface); border: 1px solid var(--border);
+    border-radius: 20px; padding: 15px; margin-top: 12px; box-shadow: var(--shadow);
+  }
+  .daily { display: flex; align-items: center; gap: 13px; min-width: 0; }
+  .ring-wrap { position: relative; width: 62px; height: 62px; flex: none; }
+  .ring-wrap svg { width: 100%; height: 100%; transform: rotate(-90deg); }
+  .ring-track { fill: none; stroke: var(--surface-3); stroke-width: 6; }
+  .ring-fill { fill: none; stroke: var(--primary); stroke-width: 6; stroke-linecap: round; transition: stroke-dasharray .6s ease; }
+  .ring-label { position: absolute; inset: 0; display: grid; place-items: center; font-size: .72rem; font-weight: 800; font-variant-numeric: tabular-nums; }
+  .ring-label small { display: block; font-size: .48rem; color: var(--muted); font-weight: 700; letter-spacing: .03em; line-height: 1; }
+  .daily-copy h3 { font-size: .85rem; font-weight: 800; letter-spacing: -.01em; margin-bottom: 2px; }
+  .daily-copy p { font-size: .71rem; color: var(--muted); line-height: 1.45; max-width: 33ch; }
+  .daily-flame { display: inline-flex; align-items: center; gap: 4px; font-size: .65rem; font-weight: 800; color: var(--accent); margin-top: 3px; }
+  .daily-flame .icon { width: 13px; height: 13px; }
+  .mini-metrics { display: grid; grid-template-columns: repeat(3, 1fr); gap: 7px; }
+  .metric {
+    background: var(--surface-2); border: 1px solid var(--border); border-radius: 13px;
+    padding: 9px 8px; text-align: center; min-width: 0;
+  }
+  .metric b { display: block; font-size: 1rem; font-weight: 800; letter-spacing: -.03em; font-variant-numeric: tabular-nums; line-height: 1.2; }
+  .metric span { display: block; color: var(--muted); font-size: .59rem; font-weight: 700; letter-spacing: .02em; margin-top: 2px; }
+
+  /* ---------- Sections / library ---------- */
+  .section { margin-top: 26px; }
+  .section-head { display: flex; flex-wrap: wrap; align-items: end; justify-content: space-between; gap: 10px 16px; margin-bottom: 12px; }
+  .section-kicker { display: flex; align-items: center; gap: 6px; font-size: .62rem; font-weight: 800; text-transform: uppercase; letter-spacing: .14em; color: var(--primary); margin-bottom: 3px; }
+  .section-kicker .icon { width: 13px; height: 13px; }
+  .section-title { font-family: "Fraunces", serif; font-size: clamp(1.35rem, 5.4vw, 1.8rem); font-weight: 600; letter-spacing: -.035em; line-height: 1.15; }
+  .section-sub { color: var(--muted); font-size: .77rem; margin-top: 4px; max-width: 55ch; }
+  .search-box { position: relative; width: 100%; }
+  .search-box .icon { position: absolute; left: 13px; top: 50%; transform: translateY(-50%); color: var(--muted); width: 17px; height: 17px; pointer-events: none; }
+  .search-box input {
+    width: 100%; height: 44px; border-radius: 13px; border: 1px solid var(--border);
+    background: var(--surface); padding: 0 14px 0 39px; font-size: .85rem; font-weight: 500;
+    transition: border-color .18s ease, box-shadow .18s ease;
+  }
+  .search-box input::placeholder { color: var(--muted); opacity: .85; }
+  .search-box input:focus { outline: none; border-color: var(--primary); box-shadow: 0 0 0 3px var(--ring); }
+  .filter-row { display: flex; align-items: center; gap: 6px; overflow-x: auto; padding: 2px 0 6px; scrollbar-width: none; -ms-overflow-style: none; }
+  .filter-row::-webkit-scrollbar { display: none; }
+  .filter-row .spacer { flex: 1 1 auto; min-width: 4px; }
+  .shuffle-toggle { flex: none; }
+  .shuffle-toggle[aria-pressed="true"] { background: var(--primary-soft); color: var(--primary); border-color: color-mix(in srgb, var(--primary) 25%, transparent); }
+
+  .deck-grid { display: grid; gap: 10px; grid-template-columns: 1fr; }
+  .deck-card {
+    position: relative; display: flex; flex-direction: column; gap: 9px; text-align: left;
+    background: var(--surface); border: 1px solid var(--border); border-radius: 18px;
+    padding: 14px; overflow: hidden; min-height: 0;
+    transition: transform .2s ease, border-color .2s ease, box-shadow .2s ease;
+  }
+  .deck-card::before {
+    content: ""; position: absolute; left: 14px; right: 14px; top: 0; height: 3px;
+    border-radius: 0 0 4px 4px; background: var(--deck, var(--primary)); opacity: .9;
+  }
+  .deck-card:hover { transform: translateY(-3px); border-color: color-mix(in srgb, var(--deck, var(--primary)) 42%, var(--border)); box-shadow: var(--shadow); }
+  .deck-card:active { transform: translateY(-1px); }
+  .deck-top { display: flex; align-items: flex-start; gap: 10px; }
+  .deck-icon {
+    width: 40px; height: 40px; border-radius: 12px; display: grid; place-items: center; flex: none;
+    color: var(--deck, var(--primary));
+    background: color-mix(in srgb, var(--deck, var(--primary)) 13%, var(--surface));
+    border: 1px solid color-mix(in srgb, var(--deck, var(--primary)) 20%, transparent);
+  }
+  .deck-icon .icon { width: 20px; height: 20px; }
+  .deck-meta { min-width: 0; flex: 1; }
+  .deck-overline { display: flex; flex-wrap: wrap; align-items: center; gap: 5px; font-size: .56rem; font-weight: 800; text-transform: uppercase; letter-spacing: .1em; color: var(--deck, var(--primary)); margin-bottom: 1px; }
+  .deck-overline .dot { width: 3px; height: 3px; border-radius: 50%; background: currentColor; opacity: .5; }
+  .deck-title { display: block; font-family: "Fraunces", serif; font-size: 1.09rem; font-weight: 650; letter-spacing: -.025em; line-height: 1.18; color: var(--ink); }
+  .deck-author { display: block; color: var(--muted); font-size: .69rem; font-weight: 600; margin-top: 2px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+  .deck-meta { display: block; }
+  .deck-progress { display: flex; align-items: center; gap: 8px; margin-top: 3px; }
+  .progress-track { flex: 1; height: 5px; border-radius: 999px; background: var(--surface-3); overflow: hidden; }
+  .progress-fill { display: block; height: 100%; border-radius: inherit; background: var(--deck, var(--primary)); transition: width .5s ease; }
+  .deck-progress span { color: var(--muted); font-size: .6rem; font-weight: 800; font-variant-numeric: tabular-nums; }
+  .deck-foot { display: flex; align-items: center; justify-content: space-between; gap: 8px; margin-top: auto; padding-top: 2px; }
+  .deck-count { color: var(--muted); font-size: .66rem; font-weight: 650; }
+  .deck-count b { color: var(--ink-soft); font-weight: 800; }
+  .deck-go { display: inline-grid; place-items: center; width: 26px; height: 26px; border-radius: 8px; background: var(--surface-2); color: var(--deck, var(--primary)); border: 1px solid var(--border); transition: .18s ease; flex: none; }
+  .deck-go .icon { width: 14px; height: 14px; }
+  .deck-card:hover .deck-go { background: var(--deck, var(--primary)); color: #fff; border-color: transparent; }
+  .deck-card.is-empty { opacity: .58; }
+  .deck-card .save-pill { position: absolute; top: 9px; right: 9px; font-size: .53rem; font-weight: 800; color: var(--accent); background: var(--accent-soft); border: 1px solid color-mix(in srgb, var(--accent) 30%, transparent); border-radius: 999px; padding: 2px 7px; display: inline-flex; align-items: center; gap: 3px; }
+  .save-pill .icon { width: 10px; height: 10px; }
+
+  .grammar-grid { display: grid; gap: 9px; grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .grammar-card {
+    display: flex; flex-direction: column; gap: 7px; text-align: left; background: var(--surface);
+    border: 1px solid var(--border); border-radius: 15px; padding: 12px; min-width: 0;
+    transition: .2s ease;
+  }
+  .grammar-card:hover { border-color: color-mix(in srgb, var(--primary) 38%, var(--border)); background: var(--surface); transform: translateY(-2px); box-shadow: var(--shadow); }
+  .grammar-card-top { display: flex; align-items: center; justify-content: space-between; gap: 6px; }
+  .grammar-icon { width: 31px; height: 31px; border-radius: 9px; display: grid; place-items: center; color: var(--primary); background: var(--primary-soft); flex: none; }
+  .grammar-icon .icon { width: 16px; height: 16px; }
+  .grammar-num { font-family: "Fraunces", serif; font-size: .65rem; font-weight: 700; color: var(--muted); opacity: .8; }
+  .grammar-title { display: block; font-size: .8rem; font-weight: 750; line-height: 1.22; letter-spacing: -.015em; color: var(--ink); }
+  .grammar-card.is-empty, .deck-card.is-empty { opacity: .5; cursor: not-allowed; }
+  .grammar-bottom { display: flex; align-items: center; justify-content: space-between; gap: 5px; margin-top: auto; color: var(--muted); font-size: .58rem; font-weight: 700; }
+  .grammar-bottom b { color: var(--primary); }
+  .grammar-bottom .icon { width: 12px; height: 12px; }
+  .no-results { text-align: center; padding: 22px 12px; border: 1px dashed var(--border-strong); border-radius: 16px; background: var(--surface-2); }
+  .no-results .icon { width: 26px; height: 26px; color: var(--muted); margin-bottom: 6px; }
+  .no-results h4 { font-size: .9rem; font-weight: 750; }
+  .no-results p { font-size: .73rem; color: var(--muted); margin-top: 3px; }
+
+  /* ---------- Tools / tips / footer ---------- */
+  .tools-grid { display: grid; gap: 10px; grid-template-columns: 1fr; }
+  .tool-card {
+    background: var(--surface); border: 1px solid var(--border); border-radius: 16px; padding: 13px;
+    display: flex; align-items: flex-start; gap: 11px; min-width: 0;
+  }
+  .tool-icon { width: 34px; height: 34px; border-radius: 10px; display: grid; place-items: center; background: var(--primary-soft); color: var(--primary); flex: none; }
+  .tool-icon .icon { width: 17px; height: 17px; }
+  .tool-card.accent .tool-icon { background: var(--accent-soft); color: var(--accent); }
+  .tool-card.green .tool-icon { background: var(--correct-soft); color: var(--correct); }
+  .tool-card h4 { font-size: .77rem; font-weight: 800; margin-bottom: 1px; }
+  .tool-card p { font-size: .67rem; color: var(--muted); line-height: 1.45; }
+  .mini-demo { display: flex; align-items: center; gap: 4px; margin-top: 6px; flex-wrap: wrap; }
+  .mini-word { border: 1px solid var(--border); background: var(--surface-2); border-radius: 5px; padding: 1px 6px; font-size: .57rem; font-weight: 750; color: var(--ink-soft); }
+  .mini-blank { width: 24px; height: 16px; border-bottom: 2px dashed var(--primary); display: inline-block; }
+  .tip-band {
+    display: flex; gap: 11px; align-items: flex-start; border-radius: 16px; padding: 14px;
+    background: linear-gradient(120deg, var(--primary-soft), transparent 130%);
+    border: 1px solid color-mix(in srgb, var(--primary) 18%, var(--border));
+  }
+  .tip-band .icon { color: var(--primary); width: 20px; height: 20px; flex: none; margin-top: 1px; }
+  .tip-band h4 { font-size: .8rem; font-weight: 800; }
+  .tip-band p { font-size: .69rem; color: var(--muted); margin-top: 1px; }
+  footer { margin: 28px 0 8px; padding: 18px 0 8px; border-top: 1px solid var(--border); display: flex; flex-wrap: wrap; justify-content: space-between; gap: 8px; color: var(--muted); font-size: .65rem; }
+  footer .foot-brand { font-family: "Fraunces", serif; font-weight: 700; color: var(--ink-soft); font-size: .83rem; }
+  footer .foot-note { max-width: 50ch; line-height: 1.5; }
+
+  /* ---------- Study screen ---------- */
+  .study-head-bar { padding-top: 12px; }
+  .study-topline { display: flex; align-items: center; gap: 8px; margin-bottom: 13px; }
+  .back-btn {
+    display: inline-flex; align-items: center; gap: 5px; border: 1px solid var(--border);
+    border-radius: 10px; background: var(--surface); color: var(--ink-soft); padding: 7px 10px;
+    font-size: .72rem; font-weight: 750; min-height: 36px;
+  }
+  .back-btn:hover { background: var(--surface-2); }
+  .back-btn .icon { width: 14px; height: 14px; }
+  .study-mode-pill { margin-left: auto; display: inline-flex; align-items: center; gap: 5px; border-radius: 999px; padding: 5px 10px; background: var(--primary-soft); color: var(--primary); border: 1px solid color-mix(in srgb, var(--primary) 22%, transparent); font-size: .62rem; font-weight: 800; letter-spacing: .03em; text-transform: uppercase; }
+  .study-mode-pill .icon { width: 12px; height: 12px; }
+  .study-title-row { display: flex; align-items: end; justify-content: space-between; gap: 10px; margin-bottom: 8px; }
+  .study-title-row h1 { font-family: "Fraunces", serif; font-size: clamp(1.3rem, 5.4vw, 1.72rem); font-weight: 650; letter-spacing: -.035em; line-height: 1.1; }
+  .study-title-row p { color: var(--muted); font-size: .7rem; margin-top: 2px; font-weight: 600; }
+  .study-counter { flex: none; font-size: .7rem; font-weight: 800; color: var(--muted); font-variant-numeric: tabular-nums; padding-bottom: 2px; }
+  .study-counter b { color: var(--ink); font-size: .82rem; }
+  .study-progress-row { display: flex; align-items: center; gap: 8px; margin-bottom: 14px; }
+  .study-progress-row .progress-track { height: 6px; }
+  .study-progress-row .progress-fill { background: linear-gradient(90deg, var(--primary), color-mix(in srgb, var(--accent) 60%, var(--primary))); width: 0; }
+  .study-layout { display: grid; gap: 16px; align-items: start; }
+  .card-stage { position: relative; min-width: 0; padding-bottom: 9px; }
+  .deck-ghost {
+    display: block; position: absolute; left: 12px; right: 12px; bottom: 1px; height: 60px;
+    border-radius: 20px; background: var(--surface-2); border: 1px solid var(--border);
+    transform: rotate(-.7deg); box-shadow: 0 12px 26px -20px rgba(40,30,15,.4);
+  }
+  .deck-ghost::after {
+    content: ""; position: absolute; left: 11px; right: 11px; bottom: -8px; height: 28px;
+    border-radius: 16px; background: color-mix(in srgb, var(--surface-3) 75%, var(--surface));
+    border: 1px solid var(--border); z-index: -1;
+  }
+  .flashcard {
+    position: relative; z-index: 1; background: var(--surface); border: 1px solid var(--border);
+    border-radius: 22px; padding: 16px; box-shadow: var(--shadow-lg); overflow: hidden;
+  }
+  .flashcard.card-reveal { animation: cardReveal .34s cubic-bezier(.2,.75,.25,1) both; }
+  .flashcard::before {
+    content: ""; position: absolute; top: 0; left: 0; right: 0; height: 4px;
+    background: linear-gradient(90deg, var(--card-accent, var(--primary)), color-mix(in srgb, var(--card-accent, var(--primary)) 20%, transparent));
+  }
+  .card-head { display: flex; align-items: center; justify-content: space-between; gap: 8px; margin-bottom: 16px; }
+  .card-tags { display: flex; flex-wrap: wrap; align-items: center; gap: 5px; min-width: 0; }
+  .tag {
+    display: inline-flex; align-items: center; gap: 4px; font-size: .57rem; font-weight: 800;
+    padding: 4px 8px; border-radius: 6px; letter-spacing: .07em; text-transform: uppercase;
+    background: var(--surface-2); border: 1px solid var(--border); color: var(--muted);
+  }
+  .tag.lesson { background: color-mix(in srgb, var(--card-accent, var(--primary)) 12%, var(--surface)); color: var(--card-accent, var(--primary)); border-color: color-mix(in srgb, var(--card-accent, var(--primary)) 22%, transparent); }
+  .tag.type-fill { background: var(--accent-soft); color: var(--accent); border-color: color-mix(in srgb, var(--accent) 28%, transparent); }
+  .tag.type-mcq { background: var(--primary-soft); color: var(--primary); border-color: color-mix(in srgb, var(--primary) 22%, transparent); }
+  .tag .icon { width: 10px; height: 10px; }
+  .card-head-actions { display: flex; align-items: center; gap: 5px; flex: none; }
+  .round-btn {
+    width: 34px; height: 34px; border-radius: 9px; border: 1px solid var(--border);
+    display: grid; place-items: center; background: var(--surface); color: var(--muted); transition: .16s ease;
+  }
+  .round-btn:hover { background: var(--surface-2); color: var(--ink); }
+  .round-btn .icon { width: 16px; height: 16px; }
+  .round-btn.saved { color: var(--accent); background: var(--accent-soft); border-color: color-mix(in srgb, var(--accent) 30%, transparent); }
+  .round-btn.speaking { color: var(--primary); background: var(--primary-soft); border-color: color-mix(in srgb, var(--primary) 30%, transparent); }
+  .card-index { display: flex; align-items: center; gap: 7px; margin-bottom: 7px; }
+  .card-index span { font-size: .57rem; font-weight: 800; color: var(--muted); text-transform: uppercase; letter-spacing: .13em; }
+  .card-index .line { height: 1px; width: 20px; background: var(--border-strong); }
+  .card-index .pts { margin-left: auto; display: inline-flex; align-items: center; gap: 3px; color: var(--accent); font-size: .57rem; font-weight: 800; text-transform: uppercase; letter-spacing: .02em; }
+  .card-index .pts .icon { width: 11px; height: 11px; }
+  .question-text {
+    font-family: "Fraunces", serif; font-size: clamp(1.22rem, 5.3vw, 1.65rem); line-height: 1.3;
+    font-weight: 600; letter-spacing: -.025em; color: var(--ink); text-wrap: pretty;
+  }
+  .q-accent { color: var(--card-accent, var(--primary)); }
+
+  .options-grid { display: grid; gap: 8px; margin-top: 17px; }
+  .option {
+    display: flex; align-items: flex-start; gap: 10px; width: 100%; text-align: left;
+    background: var(--surface-2); border: 1.5px solid var(--border); border-radius: 13px;
+    padding: 11px 12px; min-height: 48px; color: var(--ink-soft); font-weight: 600;
+    font-size: .83rem; line-height: 1.35; transition: .16s ease; touch-action: manipulation;
+  }
+  .option:hover:not(:disabled) { border-color: color-mix(in srgb, var(--primary) 48%, var(--border)); background: var(--surface); transform: translateY(-1px); }
+  .option:active:not(:disabled) { transform: scale(.996); }
+  .option:disabled { cursor: default; }
+  .option-letter {
+    width: 24px; height: 24px; border-radius: 7px; border: 1px solid var(--border);
+    background: var(--surface); display: grid; place-items: center; flex: none;
+    font-size: .66rem; font-weight: 800; color: var(--muted); margin-top: -1px;
+  }
+  .option-text { flex: 1; }
+  .option-mark { flex: none; width: 18px; height: 18px; color: transparent; margin-top: 2px; }
+  .option-mark .icon { width: 16px; height: 16px; }
+  .option.is-selected { border-color: var(--primary); background: var(--primary-soft); }
+  .option.is-selected .option-letter { background: var(--primary); color: var(--primary-ink); border-color: transparent; }
+  .option.is-correct { border-color: var(--correct); background: var(--correct-soft); color: var(--correct); }
+  .option.is-correct .option-letter { background: var(--correct); color: #fff; border-color: transparent; }
+  .option.is-correct .option-mark { color: var(--correct); }
+  .option.is-wrong { border-color: var(--wrong); background: var(--wrong-soft); color: var(--wrong); }
+  .option.is-wrong .option-letter { background: var(--wrong); color: #fff; border-color: transparent; }
+  .option.is-wrong .option-mark { color: var(--wrong); }
+  .option.is-dim { opacity: .52; }
+
+  /* Fill in the blanks + drag/drop */
+  .fill-instruction { display: flex; align-items: flex-start; gap: 7px; color: var(--muted); font-size: .69rem; font-weight: 600; margin-top: 12px; line-height: 1.45; }
+  .fill-instruction .icon { width: 14px; height: 14px; color: var(--accent); flex: none; margin-top: 1px; }
+  .fill-sentence { font-family: "Fraunces", serif; font-size: clamp(1.28rem, 5.6vw, 1.72rem); line-height: 1.9; font-weight: 550; letter-spacing: -.02em; color: var(--ink); margin: 8px 0 3px; }
+  .dropzone {
+    display: inline-flex; align-items: center; justify-content: center; vertical-align: middle;
+    min-width: 104px; min-height: 39px; padding: 0 12px; margin: 0 2px;
+    border: 2px dashed color-mix(in srgb, var(--primary) 52%, var(--border));
+    border-radius: 9px; background: color-mix(in srgb, var(--primary) 6%, var(--surface));
+    color: var(--muted); font-family: "Plus Jakarta Sans", sans-serif; font-size: .77rem;
+    font-weight: 750; letter-spacing: 0; line-height: 1.2; transition: .16s ease; cursor: pointer;
+  }
+  .dropzone:hover, .dropzone.drag-over { background: var(--primary-soft); border-color: var(--primary); border-style: solid; transform: translateY(-1px); }
+  .dropzone.filled { border-style: solid; border-color: color-mix(in srgb, var(--primary) 40%, var(--border)); background: var(--primary-soft); color: var(--primary); }
+  .dropzone.correct { background: var(--correct-soft); border-color: var(--correct); color: var(--correct); }
+  .dropzone.wrong { background: var(--wrong-soft); border-color: var(--wrong); color: var(--wrong); animation: shake .38s ease; }
+  .dropzone .placeholder { opacity: .7; font-size: .69rem; font-weight: 700; }
+  .word-bank-label { display: flex; align-items: center; justify-content: space-between; gap: 8px; margin-top: 18px; margin-bottom: 7px; }
+  .word-bank-label span { font-size: .59rem; font-weight: 800; text-transform: uppercase; letter-spacing: .12em; color: var(--muted); }
+  .word-bank-label button { border: 0; background: none; color: var(--primary); font-size: .64rem; font-weight: 800; padding: 2px; }
+  .word-bank { display: flex; flex-wrap: wrap; gap: 7px; min-height: 46px; padding: 9px; background: var(--surface-2); border: 1px solid var(--border); border-radius: 13px; }
+  .word-chip {
+    display: inline-flex; align-items: center; gap: 6px; min-height: 35px; padding: 6px 13px;
+    border-radius: 9px; border: 1px solid var(--border-strong); background: var(--surface);
+    font-size: .8rem; font-weight: 700; color: var(--ink-soft); cursor: grab;
+    box-shadow: 0 2px 0 color-mix(in srgb, var(--border-strong) 80%, transparent);
+    transition: transform .15s ease, background .15s ease, border-color .15s ease, opacity .15s ease;
+    touch-action: manipulation;
+  }
+  .word-chip .icon { width: 12px; height: 12px; color: var(--muted); }
+  .word-chip:hover { background: var(--primary-soft); border-color: var(--primary); color: var(--primary); transform: translateY(-1px); }
+  .word-chip:active { cursor: grabbing; }
+  .word-chip.dragging { opacity: .4; transform: scale(.96); }
+  .word-chip.picked { border-color: var(--primary); background: var(--primary-soft); color: var(--primary); box-shadow: 0 0 0 2px var(--ring); }
+  .word-chip.used { opacity: .3; pointer-events: none; }
+  .word-chip.reveal { border-color: var(--correct); background: var(--correct-soft); color: var(--correct); }
+  .word-chip.used.reveal { opacity: .95; }
+  .dropzone .icon { width: 11px; height: 11px; }
+  .dropzone .placeholder { display: inline-flex; align-items: center; gap: 4px; }
+  .drag-note { display: flex; align-items: center; gap: 5px; margin-top: 8px; color: var(--muted); font-size: .61rem; font-weight: 600; }
+  .drag-note .icon { width: 12px; height: 12px; color: var(--accent); }
+
+  /* Feedback */
+  .feedback { margin-top: 17px; border-radius: 13px; border: 1px solid var(--border); padding: 12px; animation: riseIn .25s ease both; }
+  .feedback.is-correct { background: var(--correct-soft); border-color: var(--correct-border); }
+  .feedback.is-wrong { background: var(--wrong-soft); border-color: var(--wrong-border); }
+  .feedback-head { display: flex; align-items: flex-start; gap: 9px; }
+  .feedback-icon { width: 26px; height: 26px; border-radius: 8px; display: grid; place-items: center; flex: none; color: #fff; }
+  .feedback.is-correct .feedback-icon { background: var(--correct); }
+  .feedback.is-wrong .feedback-icon { background: var(--wrong); }
+  .feedback-icon .icon { width: 15px; height: 15px; }
+  .feedback-title { font-size: .8rem; font-weight: 800; letter-spacing: -.01em; }
+  .feedback.is-correct .feedback-title { color: var(--correct); }
+  .feedback.is-wrong .feedback-title { color: var(--wrong); }
+  .feedback p { font-size: .72rem; line-height: 1.5; color: var(--ink-soft); margin-top: 2px; }
+  .feedback .answer-line { font-weight: 800; color: var(--ink); }
+  .feedback .explain { display: flex; align-items: flex-start; gap: 6px; padding-top: 7px; margin-top: 7px; border-top: 1px dashed color-mix(in srgb, var(--border-strong) 80%, transparent); }
+  .feedback .explain .icon { width: 13px; height: 13px; flex: none; margin-top: 2px; opacity: .7; }
+  .feedback .explain span { font-size: .69rem; color: var(--muted); }
+  .feedback .feedback-actions { display: flex; flex-wrap: wrap; align-items: center; gap: 7px; margin-top: 9px; }
+  .feedback .feedback-actions .btn { min-height: 35px; padding: 0 12px; font-size: .7rem; border-radius: 9px; }
+  .streak-pop { display: inline-flex; align-items: center; gap: 3px; padding: 3px 7px; border-radius: 999px; background: var(--accent-soft); color: var(--accent); font-size: .62rem; font-weight: 800; border: 1px solid color-mix(in srgb, var(--accent) 30%, transparent); }
+  .streak-pop .icon { width: 11px; height: 11px; }
+
+  .card-foot { display: flex; align-items: center; justify-content: space-between; gap: 8px; margin-top: 15px; padding-top: 13px; border-top: 1px solid var(--border); }
+  .card-foot .btn { min-height: 42px; font-size: .78rem; padding: 0 13px; border-radius: 11px; }
+  .card-foot .btn-primary { min-width: 0; }
+  .card-foot .btn:disabled { opacity: .4; cursor: not-allowed; }
+  .key-hint { display: none; align-items: center; gap: 5px; color: var(--muted); font-size: .6rem; font-weight: 650; }
+  .kbd { display: inline-grid; place-items: center; min-width: 18px; height: 18px; padding: 0 4px; font-size: .56rem; font-weight: 800; border-radius: 4px; background: var(--surface-2); border: 1px solid var(--border-strong); border-bottom-width: 2px; color: var(--muted); }
+
+  .study-aside { display: none; }
+  .aside-card { background: var(--surface); border: 1px solid var(--border); border-radius: 16px; padding: 14px; box-shadow: var(--shadow); }
+  .aside-card + .aside-card { margin-top: 10px; }
+  .aside-card h3 { font-size: .72rem; font-weight: 800; text-transform: uppercase; letter-spacing: .09em; color: var(--muted); margin-bottom: 8px; display: flex; align-items: center; gap: 5px; }
+  .aside-card h3 .icon { width: 13px; height: 13px; }
+  .aside-stats { display: grid; grid-template-columns: repeat(3, 1fr); gap: 5px; }
+  .aside-stat { text-align: center; background: var(--surface-2); border-radius: 9px; padding: 8px 3px; border: 1px solid var(--border); }
+  .aside-stat b { display: block; font-size: .98rem; font-weight: 800; line-height: 1.15; }
+  .aside-stat span { font-size: .52rem; color: var(--muted); font-weight: 700; display: block; margin-top: 1px; }
+  .aside-stat.good b { color: var(--correct); }
+  .aside-stat.bad b { color: var(--wrong); }
+  .setting-row { display: flex; align-items: center; justify-content: space-between; gap: 8px; padding: 7px 0; }
+  .setting-row + .setting-row { border-top: 1px solid var(--border); }
+  .setting-copy strong { display: block; font-size: .71rem; font-weight: 750; }
+  .setting-copy small { display: block; font-size: .58rem; color: var(--muted); line-height: 1.35; }
+  .switch { width: 38px; height: 22px; border-radius: 999px; border: 1px solid var(--border-strong); background: var(--surface-3); position: relative; flex: none; transition: .18s ease; padding: 0; }
+  .switch::after { content: ""; position: absolute; top: 2px; left: 2px; width: 16px; height: 16px; border-radius: 50%; background: var(--surface); box-shadow: 0 1px 3px rgba(0,0,0,.25); transition: .18s ease; }
+  .switch[aria-checked="true"] { background: var(--primary); border-color: var(--primary); }
+  .switch[aria-checked="true"]::after { transform: translateX(16px); background: var(--primary-ink); }
+  .shortcut-list { display: grid; gap: 5px; }
+  .shortcut-row { display: flex; align-items: center; justify-content: space-between; font-size: .64rem; color: var(--muted); font-weight: 600; }
+  .shortcut-row .keys { display: flex; gap: 3px; }
+  .study-tip { background: linear-gradient(130deg, var(--accent-soft), transparent 130%); border-color: color-mix(in srgb, var(--accent) 25%, var(--border)); }
+  .study-tip h3 { color: var(--accent); }
+  .study-tip p { font-size: .67rem; color: var(--muted); line-height: 1.5; }
+  .study-tip .icon { width: 17px; height: 17px; color: var(--accent); }
+
+  /* ---------- Results ---------- */
+  .result-shell { padding-top: 18px; }
+  .result-hero {
+    background: var(--surface); border: 1px solid var(--border); border-radius: 22px;
+    padding: 20px 16px; box-shadow: var(--shadow-lg); text-align: center; overflow: hidden; position: relative;
+  }
+  .result-hero::before { content: ""; position: absolute; inset: 0; background: radial-gradient(30rem 16rem at 50% -20%, var(--primary-soft), transparent 70%); pointer-events: none; }
+  .result-emoji { position: relative; width: 42px; height: 42px; border-radius: 13px; display: grid; place-items: center; margin: 0 auto 9px; background: var(--accent-soft); color: var(--accent); }
+  .result-emoji .icon { width: 22px; height: 22px; }
+  .result-hero .eyebrow { color: var(--primary); position: relative; }
+  .result-hero h1 { position: relative; font-family: "Fraunces", serif; font-weight: 600; font-size: clamp(1.6rem, 7vw, 2.3rem); letter-spacing: -.04em; line-height: 1.1; margin: 7px 0; }
+  .result-hero > p { position: relative; color: var(--muted); font-size: .77rem; max-width: 42ch; margin: 0 auto; }
+  .score-ring-wrap { position: relative; width: 132px; height: 132px; margin: 18px auto 13px; }
+  .score-ring-wrap svg { width: 100%; height: 100%; transform: rotate(-90deg); }
+  .score-ring-track { fill: none; stroke: var(--surface-3); stroke-width: 8; }
+  .score-ring-fill { fill: none; stroke: var(--primary); stroke-width: 8; stroke-linecap: round; transition: stroke-dasharray 1s cubic-bezier(.2,.7,.2,1); }
+  .score-center { position: absolute; inset: 0; display: flex; flex-direction: column; align-items: center; justify-content: center; }
+  .score-center b { font-family: "Fraunces", serif; font-size: 1.9rem; font-weight: 650; letter-spacing: -.05em; line-height: 1; }
+  .score-center b small { font-size: 1rem; color: var(--muted); font-weight: 600; }
+  .score-center span { font-size: .59rem; color: var(--muted); font-weight: 750; text-transform: uppercase; letter-spacing: .1em; margin-top: 3px; }
+  .result-metrics { position: relative; display: grid; grid-template-columns: repeat(3, 1fr); gap: 7px; max-width: 420px; margin: 0 auto 16px; }
+  .result-metric { background: var(--surface-2); border: 1px solid var(--border); border-radius: 11px; padding: 8px 5px; }
+  .result-metric b { display: block; font-size: .94rem; font-weight: 800; line-height: 1.2; }
+  .result-metric span { font-size: .54rem; color: var(--muted); font-weight: 700; display: block; }
+  .result-actions { position: relative; display: flex; flex-direction: column; gap: 7px; max-width: 420px; margin: 0 auto; }
+  .result-actions .btn { width: 100%; min-height: 44px; font-size: .82rem; }
+  .review-section { margin-top: 16px; }
+  .review-section-head { display: flex; align-items: center; justify-content: space-between; gap: 10px; margin-bottom: 8px; }
+  .review-section-head h2 { font-family: "Fraunces", serif; font-size: 1.1rem; font-weight: 650; letter-spacing: -.03em; }
+  .review-section-head span { font-size: .64rem; color: var(--muted); font-weight: 700; }
+  .review-list { display: grid; gap: 8px; }
+  .review-card { background: var(--surface); border: 1px solid var(--border); border-left: 3px solid var(--wrong); border-radius: 12px; padding: 11px 12px; }
+  .review-card.correct { border-left-color: var(--correct); }
+  .review-q { font-size: .75rem; font-weight: 700; line-height: 1.4; display: flex; gap: 7px; align-items: flex-start; }
+  .review-q .status { width: 17px; height: 17px; border-radius: 50%; display: grid; place-items: center; flex: none; color: #fff; background: var(--wrong); margin-top: 1px; }
+  .review-card.correct .status { background: var(--correct); }
+  .review-q .status .icon { width: 10px; height: 10px; }
+  .review-answers { margin: 5px 0 0 24px; display: grid; gap: 2px; font-size: .67rem; color: var(--muted); line-height: 1.4; }
+  .review-answers b { color: var(--ink-soft); }
+  .review-answers .right { color: var(--correct); font-weight: 700; }
+  .review-explain { margin: 4px 0 0 24px; font-size: .64rem; color: var(--muted); font-style: italic; }
+  .empty-perfect { text-align: center; background: var(--surface); border: 1px dashed var(--border-strong); border-radius: 15px; padding: 20px 12px; }
+  .empty-perfect .icon { width: 28px; height: 28px; color: var(--accent); }
+  .empty-perfect h3 { font-family: "Fraunces", serif; font-size: 1.1rem; margin-top: 4px; }
+  .empty-perfect p { color: var(--muted); font-size: .7rem; margin-top: 2px; }
+
+  /* ---------- Bottom nav / toast / confetti ---------- */
+  .bottom-nav {
+    position: fixed; z-index: 60; left: 0; right: 0; bottom: 0;
+    display: grid; grid-template-columns: repeat(4, 1fr);
+    background: var(--nav-bg); border-top: 1px solid var(--border);
+    -webkit-backdrop-filter: blur(22px) saturate(1.4); backdrop-filter: blur(22px) saturate(1.4);
+    padding-bottom: env(safe-area-inset-bottom);
+  }
+  .bottom-nav-inner { grid-column: 1 / -1; display: grid; grid-template-columns: repeat(4, 1fr); max-width: 560px; margin: 0 auto; width: 100%; }
+  .bottom-btn {
+    border: 0; background: none; min-height: 62px; display: flex; flex-direction: column;
+    align-items: center; justify-content: center; gap: 3px; color: var(--muted);
+    font-size: .57rem; font-weight: 750; letter-spacing: .01em; transition: color .18s ease; position: relative;
+  }
+  .bottom-btn .icon { width: 20px; height: 20px; transition: transform .18s ease; }
+  .bottom-btn::before { content: ""; position: absolute; top: 5px; width: 26px; height: 3px; border-radius: 3px; background: transparent; transition: .18s ease; }
+  .bottom-btn.is-active { color: var(--primary); }
+  .bottom-btn.is-active .icon { transform: translateY(-1px) scale(1.05); }
+  .bottom-btn.is-active::before { background: var(--primary); }
+  .bottom-btn:active .icon { transform: scale(.9); }
+  body.studying .bottom-nav { display: none; }
+
+  .toast {
+    position: fixed; z-index: 100; left: 50%; bottom: calc(80px + env(safe-area-inset-bottom));
+    transform: translateX(-50%) translateY(14px); width: max-content; max-width: min(92vw, 400px);
+    background: var(--ink); color: var(--surface); border-radius: 11px;
+    padding: 9px 13px; font-size: .73rem; font-weight: 650; line-height: 1.35;
+    display: flex; align-items: center; gap: 7px; box-shadow: 0 14px 40px -10px rgba(0,0,0,.45);
+    opacity: 0; pointer-events: none; transition: opacity .24s ease, transform .24s ease;
+  }
+  .toast.show { opacity: 1; transform: translateX(-50%) translateY(0); }
+  .toast .icon { width: 15px; height: 15px; color: var(--accent); flex: none; }
+  body.studying .toast { bottom: calc(22px + env(safe-area-inset-bottom)); }
+  .confetti { position: fixed; inset: 0; pointer-events: none; z-index: 90; overflow: hidden; }
+  .confetti i { position: absolute; top: -12px; width: 8px; height: 12px; border-radius: 2px; animation: confettiFall 2.6s linear forwards; }
+
+  .screen { animation: fadeIn .28s ease both; }
+
+  /* ---------- Animations ---------- */
+  @keyframes wave { 0%,100% { height: 3px; } 50% { height: 11px; } }
+  @keyframes softFloat { 0%,100% { transform: translateY(0); } 50% { transform: translateY(-6px); } }
+  @keyframes riseIn { from { opacity: 0; transform: translateY(6px); } to { opacity: 1; transform: translateY(0); } }
+  @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+  @keyframes shake { 0%,100% { transform: translateX(0); } 20% { transform: translateX(-5px); } 40% { transform: translateX(5px); } 60% { transform: translateX(-3px); } 80% { transform: translateX(3px); } }
+  @keyframes confettiFall { to { transform: translate3d(var(--dx, 20px), 105vh, 0) rotate(var(--rot, 360deg)); opacity: .15; } }
+  @keyframes cardReveal { from { opacity: .5; transform: translateY(9px) scale(.992); } to { opacity: 1; transform: translateY(0) scale(1); } }
+  @keyframes pulseRing { 0% { box-shadow: 0 0 0 0 var(--ring); } 70% { box-shadow: 0 0 0 9px transparent; } 100% { box-shadow: 0 0 0 0 transparent; } }
+
+  /* ---------- Responsive ---------- */
+  @media (min-width: 420px) {
+    .hero { border-radius: 28px; padding: 26px 22px; }
+    .hero .btn-primary { flex: 0 1 auto; }
+    .deck-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+    .grammar-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+    .result-actions { flex-direction: row; flex-wrap: wrap; }
+    .result-actions .btn { flex: 1 1 140px; width: auto; }
+    .flashcard { padding: 20px; }
+    .option { padding: 12px 13px; font-size: .86rem; }
+    .options-grid { gap: 9px; }
+  }
+  @media (min-width: 600px) {
+    .shell { padding-inline: 24px; }
+    .brand-sub { display: block; }
+    .topbar-inner { min-height: 68px; }
+    .hero-art { min-height: 330px; }
+    .hero { padding: 28px 26px 26px; }
+    .progress-panel { padding: 16px 18px; gap: 20px; grid-template-columns: 1fr auto; align-items: center; }
+    .mini-metrics { min-width: 198px; }
+    .daily .ring-wrap { width: 68px; height: 68px; }
+    .section { margin-top: 32px; }
+    .deck-grid { gap: 12px; }
+    .deck-card { padding: 16px; border-radius: 20px; }
+    .deck-title { font-size: 1.16rem; }
+    .grammar-grid { grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 10px; }
+    .grammar-card { padding: 13px; }
+    .tools-grid { grid-template-columns: repeat(3, 1fr); }
+    .flashcard { padding: 24px; border-radius: 25px; }
+    .options-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+    .card-foot .btn { padding: 0 17px; }
+    .key-hint { display: inline-flex; }
+    .result-hero { padding: 26px 24px; border-radius: 26px; }
+    .result-shell { padding-top: 24px; }
+    .study-head-bar { padding-top: 16px; }
+  }
+  @media (min-width: 768px) and (max-width: 1023px) {
+    .hero-grid { grid-template-columns: minmax(0, 1fr) minmax(0, .95fr); gap: 18px; }
+    .hero-art { display: block; min-height: 320px; }
+    .hero h1 { font-size: clamp(2.5rem, 6vw, 3rem); }
+    .hero-lede { font-size: .86rem; }
+    .mode-switch { margin: 16px 0 10px; }
+  }
+  @media (min-width: 900px) {
+    .hero-art { min-height: 360px; }
+    .deck-grid { grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 13px; }
+    .top-nav { display: flex; }
+    .study-layout { grid-template-columns: minmax(0, 1fr) 250px; gap: 18px; }
+    .study-aside { display: block; position: sticky; top: 82px; }
+    .card-stage { padding-bottom: 8px; }
+    .flashcard { padding: 28px; }
+    .question-text { font-size: clamp(1.35rem, 2.2vw, 1.7rem); }
+    .fill-sentence { font-size: clamp(1.35rem, 2.3vw, 1.72rem); }
+    .result-shell { max-width: 780px; }
+    .result-review-shell { max-width: 780px; margin: 0 auto; }
+  }
+  @media (min-width: 1024px) {
+    .hero { padding: 38px 38px 34px; border-radius: 32px; margin-top: 22px; }
+    .hero-grid { grid-template-columns: minmax(0, 1.02fr) minmax(0, .98fr); gap: 28px; }
+    .hero h1 { font-size: clamp(3rem, 4.4vw, 4rem); }
+    .hero-lede { font-size: .93rem; }
+    .hero-art { display: block; min-height: 390px; }
+    .art-card-front { inset: 18px 3% 24px 2%; }
+    .progress-panel { margin-top: 14px; border-radius: 22px; padding: 16px 22px; }
+    .section { margin-top: 36px; }
+    .section-head { margin-bottom: 14px; }
+    .deck-grid { grid-template-columns: repeat(4, minmax(0, 1fr)); }
+    .grammar-grid { grid-template-columns: repeat(4, minmax(0, 1fr)); }
+    .deck-card { border-radius: 21px; padding: 16px; }
+    .deck-title { font-size: 1.1rem; }
+    .study-layout { grid-template-columns: minmax(0, 1fr) 270px; gap: 22px; }
+    .flashcard { border-radius: 27px; padding: 30px; }
+    .card-head { margin-bottom: 19px; }
+    .option { min-height: 52px; font-size: .88rem; }
+    .study-title-row { margin-bottom: 10px; }
+    .search-box { width: 270px; flex: none; }
+    footer { margin-top: 34px; }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    *, *::before, *::after { animation-duration: .01ms !important; animation-iteration-count: 1 !important; transition-duration: .01ms !important; scroll-behavior: auto !important; }
+  }
+</style>
+</head>
+<body>
+
+<svg width="0" height="0" style="position:absolute;overflow:hidden" aria-hidden="true" focusable="false">
+  <defs>
+    <symbol id="i-book" viewBox="0 0 24 24"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/></symbol>
+    <symbol id="i-spark" viewBox="0 0 24 24"><path d="M12 3l1.75 5.25L19 10l-5.25 1.75L12 17l-1.75-5.25L5 10l5.25-1.75L12 3z"/><path d="M19 15l.8 2.2L22 18l-2.2.8L19 21l-.8-2.2L16 18l2.2-.8L19 15z"/></symbol>
+    <symbol id="i-arrow-right" viewBox="0 0 24 24"><path d="M4 12h15"/><path d="M13 6l6 6-6 6"/></symbol>
+    <symbol id="i-arrow-left" viewBox="0 0 24 24"><path d="M20 12H5"/><path d="M11 6l-6 6 6 6"/></symbol>
+    <symbol id="i-chevron-right" viewBox="0 0 24 24"><path d="M9 18l6-6-6-6"/></symbol>
+    <symbol id="i-chevron-left" viewBox="0 0 24 24"><path d="M15 18l-6-6 6-6"/></symbol>
+    <symbol id="i-search" viewBox="0 0 24 24"><circle cx="11" cy="11" r="7"/><path d="M21 21l-4.3-4.3"/></symbol>
+    <symbol id="i-sun" viewBox="0 0 24 24"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M2 12h2M20 12h2M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4"/></symbol>
+    <symbol id="i-moon" viewBox="0 0 24 24"><path d="M21 12.8A8.5 8.5 0 1 1 11.2 3 6.6 6.6 0 0 0 21 12.8z"/></symbol>
+    <symbol id="i-volume" viewBox="0 0 24 24"><path d="M11 5L6 9H2v6h4l5 4V5z"/><path d="M15.5 8.5a5 5 0 0 1 0 7"/><path d="M18.5 5.5a9 9 0 0 1 0 13"/></symbol>
+    <symbol id="i-volume-off" viewBox="0 0 24 24"><path d="M11 5L6 9H2v6h4l5 4V5z"/><path d="M22 9l-6 6M16 9l6 6"/></symbol>
+    <symbol id="i-bookmark" viewBox="0 0 24 24"><path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z"/></symbol>
+    <symbol id="i-headphones" viewBox="0 0 24 24"><path d="M3 18v-6a9 9 0 0 1 18 0v6"/><path d="M21 19a2 2 0 0 1-2 2h-1a2 2 0 0 1-2-2v-3a2 2 0 0 1 2-2h3v5zM3 19a2 2 0 0 0 2 2h1a2 2 0 0 0 2-2v-3a2 2 0 0 0-2-2H3v5z"/></symbol>
+    <symbol id="i-home" viewBox="0 0 24 24"><path d="M3 10.5L12 3l9 7.5"/><path d="M5 9.5V21h14V9.5"/><path d="M9 21v-6h6v6"/></symbol>
+    <symbol id="i-grid" viewBox="0 0 24 24"><rect x="3" y="3" width="7" height="7" rx="1.5"/><rect x="14" y="3" width="7" height="7" rx="1.5"/><rect x="3" y="14" width="7" height="7" rx="1.5"/><rect x="14" y="14" width="7" height="7" rx="1.5"/></symbol>
+    <symbol id="i-shuffle" viewBox="0 0 24 24"><path d="M16 3h5v5"/><path d="M4 20L21 3"/><path d="M21 16v5h-5"/><path d="M15 15l6 6"/><path d="M4 4l5 5"/></symbol>
+    <symbol id="i-check" viewBox="0 0 24 24"><path d="M20 6L9 17l-5-5"/></symbol>
+    <symbol id="i-x" viewBox="0 0 24 24"><path d="M18 6L6 18M6 6l12 12"/></symbol>
+    <symbol id="i-bulb" viewBox="0 0 24 24"><path d="M9 18h6M10 22h4"/><path d="M12 2a7 7 0 0 0-4 12.7V17h8v-2.3A7 7 0 0 0 12 2z"/></symbol>
+    <symbol id="i-refresh" viewBox="0 0 24 24"><path d="M3 12a9 9 0 0 1 15.3-6.4L21 8"/><path d="M21 3v5h-5"/><path d="M21 12a9 9 0 0 1-15.3 6.4L3 16"/><path d="M3 21v-5h5"/></symbol>
+    <symbol id="i-trophy" viewBox="0 0 24 24"><path d="M8 21h8M12 17v4M7 4h10v5a5 5 0 0 1-10 0V4z"/><path d="M17 5h3v2a3 3 0 0 1-3 3M7 5H4v2a3 3 0 0 0 3 3"/></symbol>
+    <symbol id="i-cloud" viewBox="0 0 24 24"><path d="M17.5 19H7a4 4 0 0 1-.6-7.95A6 6 0 0 1 18 9.5a4.75 4.75 0 0 1-.5 9.5z"/><path d="M9 15h6"/></symbol>
+    <symbol id="i-waves" viewBox="0 0 24 24"><path d="M2 6c2 0 2 2 4 2s2-2 4-2 2 2 4 2 2-2 4-2 2 2 4 2"/><path d="M2 12c2 0 2 2 4 2s2-2 4-2 2 2 4 2 2-2 4-2 2 2 4 2"/><path d="M2 18c2 0 2 2 4 2s2-2 4-2 2 2 4 2 2-2 4-2 2 2 4 2"/></symbol>
+    <symbol id="i-bird" viewBox="0 0 24 24"><path d="M20.2 12.2a6 6 0 0 0-8.4-8.4L5 10.5V19h8.5z"/><path d="M16 8L2 22"/><path d="M17.5 15H9"/><circle cx="17.5" cy="6.5" r=".5"/></symbol>
+    <symbol id="i-train" viewBox="0 0 24 24"><rect x="4" y="3" width="16" height="15" rx="3"/><path d="M4 11h16M12 3v8"/><path d="M8 21l-2-3M16 21l2-3"/><circle cx="8.5" cy="14.5" r=".6"/><circle cx="15.5" cy="14.5" r=".6"/></symbol>
+    <symbol id="i-moon-stars" viewBox="0 0 24 24"><path d="M18 4l.8 2.2L21 7l-2.2.8L18 10l-.8-2.2L15 7l2.2-.8L18 4z"/><path d="M9.5 20a7.5 7.5 0 1 1 2.1-14.7A5.8 5.8 0 0 0 18 14a7.5 7.5 0 0 1-8.5 6z"/></symbol>
+    <symbol id="i-tree" viewBox="0 0 24 24"><path d="M12 22v-7"/><path d="M12 15l-4-3h2L7 8h3l2-5 2 5h3l-3 4h2l-4 3z"/></symbol>
+    <symbol id="i-clock" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></symbol>
+    <symbol id="i-flame" viewBox="0 0 24 24"><path d="M12 22c4 0 7-2.7 7-6.5 0-3.3-2.2-5.6-4-7.5-.7 2-1.6 3.2-3 4-.2-3.5-1.7-6.2-4-8 .2 3.3-3 5.6-3 11.5C5 19.3 8 22 12 22z"/></symbol>
+    <symbol id="i-target" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><circle cx="12" cy="12" r="5"/><circle cx="12" cy="12" r="1"/></symbol>
+    <symbol id="i-brain" viewBox="0 0 24 24"><path d="M9.5 4.5A3 3 0 0 0 4 6v1a3 3 0 0 0-1 5.8V15a3 3 0 0 0 4.5 2.6A3 3 0 0 0 12 18V5.5a2 2 0 0 0-2.5-1z"/><path d="M14.5 4.5A3 3 0 0 1 20 6v1a3 3 0 0 1 1 5.8V15a3 3 0 0 1-4.5 2.6A3 3 0 0 1 12 18V5.5a2 2 0 0 1 2.5-1z"/></symbol>
+    <symbol id="i-pen" viewBox="0 0 24 24"><path d="M12 20h9"/><path d="M16.5 3.5a2.1 2.1 0 0 1 3 3L7 19l-4 1 1-4z"/></symbol>
+    <symbol id="i-link" viewBox="0 0 24 24"><path d="M10 13a5 5 0 0 0 7.5.5l3-3a5 5 0 0 0-7-7l-1.7 1.7"/><path d="M14 11a5 5 0 0 0-7.5-.5l-3 3a5 5 0 0 0 7 7l1.7-1.7"/></symbol>
+    <symbol id="i-branch" viewBox="0 0 24 24"><circle cx="6" cy="5" r="2.5"/><circle cx="18" cy="12" r="2.5"/><circle cx="6" cy="19" r="2.5"/><path d="M6 7.5v9M8.5 5h3a3 3 0 0 1 3 3v1.5M8.5 19h3a3 3 0 0 0 3-3v-1.5"/></symbol>
+    <symbol id="i-infinity" viewBox="0 0 24 24"><path d="M18.2 7.8a5 5 0 1 0 0 8.4L5.8 7.8a5 5 0 1 0 0 8.4z"/></symbol>
+    <symbol id="i-message" viewBox="0 0 24 24"><path d="M21 15a4 4 0 0 1-4 4H8l-5 3V6a4 4 0 0 1 4-4h10a4 4 0 0 1 4 4z"/><path d="M8 9h8M8 13h5"/></symbol>
+    <symbol id="i-mic" viewBox="0 0 24 24"><rect x="9" y="2" width="6" height="11" rx="3"/><path d="M5 10a7 7 0 0 0 14 0M12 17v4M8 21h8"/></symbol>
+    <symbol id="i-layers" viewBox="0 0 24 24"><path d="M12 2L2 7l10 5 10-5-10-5z"/><path d="M2 12l10 5 10-5"/><path d="M2 17l10 5 10-5"/></symbol>
+    <symbol id="i-grip" viewBox="0 0 24 24"><circle cx="9" cy="6" r="1"/><circle cx="15" cy="6" r="1"/><circle cx="9" cy="12" r="1"/><circle cx="15" cy="12" r="1"/><circle cx="9" cy="18" r="1"/><circle cx="15" cy="18" r="1"/></symbol>
+    <symbol id="i-star" viewBox="0 0 24 24"><path d="M12 3l2.7 5.5 6.1.9-4.4 4.3 1 6.1-5.4-2.9-5.4 2.9 1-6.1L3.2 9.4l6.1-.9L12 3z"/></symbol>
+    <symbol id="i-help" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M9.3 9a2.8 2.8 0 0 1 5.4 1c0 1.9-2.7 2.2-2.7 4"/><path d="M12 18h.01"/></symbol>
+  </defs>
+</svg>
+
+<header class="topbar">
+  <div class="shell topbar-inner">
+    <button class="brand" id="brandHome" aria-label="Blossom — go to library">
+      <span class="brand-mark"><svg class="icon"><use href="#i-book"></use></svg></span>
+      <span class="brand-text">
+        <span class="brand-title">Blossom</span>
+        <span class="brand-sub">Class 8 · English deck</span>
+      </span>
+    </button>
+    <nav class="top-nav" aria-label="Main navigation">
+      <button class="nav-link is-active" data-goto="home">Library</button>
+      <button class="nav-link" data-goto="mix">Daily mix</button>
+      <button class="nav-link" data-goto="grammar">Grammar</button>
+    </nav>
+    <div class="top-actions">
+      <button class="icon-btn" id="soundBtn" aria-pressed="true" aria-label="Mute sound effects" title="Toggle sound effects">
+        <svg class="icon sound-on-icon"><use href="#i-volume"></use></svg>
+        <svg class="icon sound-off-icon"><use href="#i-volume-off"></use></svg>
+      </button>
+      <button class="icon-btn theme-btn" id="themeBtn" aria-label="Switch to dark theme" title="Switch theme">
+        <svg class="icon theme-moon"><use href="#i-moon"></use></svg>
+        <svg class="icon theme-sun"><use href="#i-sun"></use></svg>
+      </button>
+    </div>
+  </div>
+</header>
+
+<main id="app">
+  <!-- ================= HOME ================= -->
+  <section id="screen-home" class="screen" aria-labelledby="pageTitle">
+    <div class="shell">
+      <section class="hero" aria-labelledby="pageTitle">
+        <div class="hero-grid">
+          <div class="hero-copy">
+            <span class="hero-badge"><svg class="icon"><use href="#i-spark"></use></svg> WBBSE · Blossoms · Class VIII</span>
+            <h1 id="pageTitle">Make every line <em>stick.</em></h1>
+            <p class="hero-lede">Flashcards for the lessons you need, and a grammar gym for the rules that keep slipping. Tap to answer, drag to complete, and <strong>hear your progress.</strong></p>
+            <div class="mode-switch" role="group" aria-label="Choose card type">
+              <button class="mode-btn is-active" data-mode="mixed" aria-pressed="true"><svg class="icon"><use href="#i-layers"></use></svg> Everything</button>
+              <button class="mode-btn" data-mode="mcq" aria-pressed="false"><svg class="icon"><use href="#i-brain"></use></svg> MCQ</button>
+              <button class="mode-btn" data-mode="fill" aria-pressed="false"><svg class="icon"><use href="#i-grip"></use></svg> Drag &amp; drop</button>
+            </div>
+            <div class="hero-cta">
+              <button class="btn btn-primary" id="quickStart"><svg class="icon"><use href="#i-spark"></use></svg><span id="quickStartLabel">Start a 20-card mix</span><svg class="icon"><use href="#i-arrow-right"></use></svg></button>
+              <button class="btn btn-ghost" id="savedStart"><svg class="icon"><use href="#i-bookmark"></use></svg> Saved cards <span id="heroSavedCount">0</span></button>
+            </div>
+            <div class="hero-stats">
+              <span><svg class="icon"><use href="#i-layers"></use></svg><b id="heroCardCount">—</b> practice cards</span>
+              <span><svg class="icon"><use href="#i-book"></use></svg><b>7</b> literature lessons</span>
+              <span><svg class="icon"><use href="#i-pen"></use></svg><b>9</b> grammar topics</span>
+            </div>
+          </div>
+          <div class="hero-art" aria-hidden="true">
+            <div class="art-stage">
+              <div class="art-card art-card-back"></div>
+              <div class="art-card art-card-mid"></div>
+              <div class="float-badge badge-points"><svg class="icon"><use href="#i-trophy"></use></svg> +10 focus</div>
+              <div class="art-card art-card-front">
+                <div class="art-top">
+                  <span class="art-lesson"><svg class="icon"><use href="#i-waves"></use></svg> Lesson 6 · The Sea</span>
+                  <span class="art-bookmark"><svg class="icon"><use href="#i-bookmark"></use></svg></span>
+                </div>
+                <div class="art-eyebrow">Spot the device</div>
+                <div class="art-quote">“The sea is a hungry dog.”</div>
+                <div class="art-q">Which poetic device is used here?</div>
+                <div class="art-options">
+                  <div class="art-option is-right">Metaphor <svg class="icon"><use href="#i-check"></use></svg></div>
+                  <div class="art-option">Simile <span></span></div>
+                  <div class="art-option">Alliteration <span></span></div>
+                </div>
+                <div class="art-foot">
+                  <span>Card 04 · tap to reveal</span>
+                  <span class="art-wave"><i style="height:5px"></i><i style="height:9px"></i><i style="height:4px"></i><i style="height:11px"></i><i style="height:6px"></i></span>
+                </div>
+              </div>
+              <div class="float-badge badge-audio"><svg class="icon"><use href="#i-volume"></use></svg> Audio feedback</div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section class="progress-panel" aria-label="Your study progress">
+        <div class="daily">
+          <div class="ring-wrap">
+            <svg viewBox="0 0 64 64" aria-hidden="true">
+              <circle class="ring-track" cx="32" cy="32" r="26"></circle>
+              <circle class="ring-fill" id="dailyRing" cx="32" cy="32" r="26" stroke-dasharray="0 163.4"></circle>
+            </svg>
+            <div class="ring-label"><span><span id="dailyCount">0</span><small>/ 10</small></span></div>
+          </div>
+          <div class="daily-copy">
+            <h3>Today’s tiny target</h3>
+            <p>Ten cards a day keeps the exam panic away. Your progress is saved on this device.</p>
+            <div class="daily-flame"><svg class="icon"><use href="#i-flame"></use></svg><span id="streakLabel">Start a streak today</span></div>
+          </div>
+        </div>
+        <div class="mini-metrics">
+          <div class="metric"><b id="metricAccuracy">—</b><span>accuracy</span></div>
+          <div class="metric"><b id="metricExplored">0</b><span>explored</span></div>
+          <div class="metric"><b id="metricSaved">0</b><span>saved</span></div>
+        </div>
+      </section>
+
+      <section class="section" id="library">
+        <div class="section-head">
+          <div>
+            <div class="section-kicker"><svg class="icon"><use href="#i-book"></use></svg> Blossoms · Literature</div>
+            <h2 class="section-title">Choose your text</h2>
+            <p class="section-sub" id="librarySummary">Loading your deck…</p>
+          </div>
+          <div class="search-box">
+            <svg class="icon"><use href="#i-search"></use></svg>
+            <input id="deckSearch" type="search" autocomplete="off" placeholder="Find a lesson or topic…" aria-label="Search lessons and grammar topics">
+          </div>
+        </div>
+        <div class="filter-row" role="group" aria-label="Filter the library">
+          <button class="chip is-active" data-filter="all">All</button>
+          <button class="chip" data-filter="literature">Literature</button>
+          <button class="chip" data-filter="grammar">Grammar</button>
+          <button class="chip" data-filter="saved"><svg class="icon"><use href="#i-bookmark"></use></svg> Saved</button>
+          <button class="chip" data-filter="unseen">Unseen</button>
+          <span class="spacer"></span>
+          <button class="chip shuffle-toggle" id="shuffleToggle" aria-pressed="true" title="Shuffle cards in each session"><svg class="icon"><use href="#i-shuffle"></use></svg> Shuffle</button>
+        </div>
+        <div class="deck-grid" id="litGrid"></div>
+        <div class="no-results is-hidden" id="litEmpty">
+          <svg class="icon"><use href="#i-search"></use></svg>
+          <h4>No lessons match that search</h4>
+          <p>Try a lesson name, author, or switch the filter.</p>
+        </div>
+      </section>
+
+      <section class="section" id="grammarSection">
+        <div class="section-head">
+          <div>
+            <div class="section-kicker"><svg class="icon"><use href="#i-pen"></use></svg> Grammar gym</div>
+            <h2 class="section-title">Master the mechanics</h2>
+            <p class="section-sub">Nine essentials, from verb forms to prepositions — with a little drag-and-drop magic.</p>
+          </div>
+        </div>
+        <div class="grammar-grid" id="grammarGrid"></div>
+        <div class="no-results is-hidden" id="grammarEmpty">
+          <svg class="icon"><use href="#i-search"></use></svg>
+          <h4>No grammar topics found</h4>
+          <p>Clear the search or choose “All” to see every topic.</p>
+        </div>
+        <div class="tip-band" style="margin-top:12px">
+          <svg class="icon"><use href="#i-bulb"></use></svg>
+          <div>
+            <h4>Board-exam habit</h4>
+            <p>In fill-in-the-blank items, read the whole sentence first. The words around the gap often decide the tense, article, or preposition — before you touch a single option.</p>
+          </div>
+        </div>
+      </section>
+
+      <section class="section" id="toolsSection">
+        <div class="section-head">
+          <div>
+            <div class="section-kicker"><svg class="icon"><use href="#i-headphones"></use></svg> Study tools</div>
+            <h2 class="section-title">Built for your brain</h2>
+          </div>
+        </div>
+        <div class="tools-grid">
+          <div class="tool-card accent">
+            <div class="tool-icon"><svg class="icon"><use href="#i-volume"></use></svg></div>
+            <div>
+              <h4>Audio feedback</h4>
+              <p>Gentle chimes for correct answers, a soft nudge for mistakes. Toggle sound from the top bar.</p>
+              <button class="chip btn-sm" id="soundDemo" style="margin-top:7px;padding:4px 9px;min-height:28px;font-size:.62rem"><svg class="icon"><use href="#i-volume"></use></svg> Hear a sample</button>
+            </div>
+          </div>
+          <div class="tool-card green">
+            <div class="tool-icon"><svg class="icon"><use href="#i-grip"></use></svg></div>
+            <div>
+              <h4>Drag, drop, done</h4>
+              <p>Word blocks, one right answer. Drag it into the gap — or tap it if you’re on a phone.</p>
+              <div class="mini-demo"><span class="mini-word">since</span><span class="mini-word">for</span><span class="mini-blank"></span><span class="mini-word">from</span></div>
+            </div>
+          </div>
+          <div class="tool-card">
+            <div class="tool-icon"><svg class="icon"><use href="#i-bookmark"></use></svg></div>
+            <div>
+              <h4>Your saved stack</h4>
+              <p>Tap the bookmark on any card. Saved questions collect here for a calm revision session.</p>
+              <button class="chip btn-sm" id="savedLibraryBtn" style="margin-top:7px;padding:4px 9px;min-height:28px;font-size:.62rem"><svg class="icon"><use href="#i-bookmark"></use></svg> Review saved</button>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <footer>
+        <div>
+          <div class="foot-brand">Blossom <span aria-hidden="true">·</span> <span style="font-family:'Plus Jakarta Sans',sans-serif;font-weight:600;font-size:.65rem;color:var(--muted)">Class 8 English</span></div>
+          <div style="margin-top:2px">Blossoms lessons 2, 6, 9, 10, 11, 12, 13 &amp; core grammar.</div>
+        </div>
+        <p class="foot-note">A practice companion inspired by the WBBSE Class VIII English curriculum. Always cross-check with your prescribed textbook. Progress is stored only in your browser.</p>
+      </footer>
+    </div>
+  </section>
+
+  <!-- ================= STUDY ================= -->
+  <section id="screen-study" class="screen is-hidden" aria-labelledby="studyTitle">
+    <div class="shell study-head-bar">
+      <div class="study-topline">
+        <button class="back-btn" id="studyBack"><svg class="icon"><use href="#i-chevron-left"></use></svg> Library</button>
+        <span class="study-mode-pill" id="studyModePill"><svg class="icon"><use href="#i-layers"></use></svg> Mixed</span>
+      </div>
+      <div class="study-title-row">
+        <div style="min-width:0">
+          <h1 id="studyTitle">Study deck</h1>
+          <p id="studySub">Let’s begin.</p>
+        </div>
+        <div class="study-counter"><b id="studyCurrent">1</b> / <span id="studyTotal">1</span></div>
+      </div>
+      <div class="study-progress-row">
+        <div class="progress-track" role="progressbar" aria-label="Session progress" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0" id="studyProgressBar"><span class="progress-fill" id="studyProgress"></span></div>
+        <span style="font-size:.62rem;font-weight:800;color:var(--muted);font-variant-numeric:tabular-nums" id="studyPercent">0%</span>
+      </div>
+    </div>
+
+    <div class="shell study-layout">
+      <div class="card-stage">
+        <div class="deck-ghost" aria-hidden="true"></div>
+        <article class="flashcard" id="flashcard" aria-live="polite">
+          <div class="card-head">
+            <div class="card-tags" id="cardTags"></div>
+            <div class="card-head-actions">
+              <button class="round-btn" id="listenBtn" title="Read this card aloud" aria-label="Read this card aloud"><svg class="icon"><use href="#i-volume"></use></svg></button>
+              <button class="round-btn" id="bookmarkBtn" title="Save this card" aria-label="Save this card" aria-pressed="false"><svg class="icon"><use href="#i-bookmark"></use></svg></button>
+            </div>
+          </div>
+          <div id="cardContent"></div>
+          <div class="feedback is-hidden" id="feedback" role="status"></div>
+          <div class="card-foot">
+            <button class="btn btn-ghost" id="prevBtn"><svg class="icon"><use href="#i-arrow-left"></use></svg> <span class="prev-label">Back</span></button>
+            <span class="key-hint"><span class="kbd">1</span>–<span class="kbd">4</span> answer <span style="opacity:.5">·</span> <span class="kbd">↩</span> next</span>
+            <button class="btn btn-primary" id="nextBtn" disabled><span id="nextLabel">Next card</span> <svg class="icon"><use href="#i-arrow-right"></use></svg></button>
+          </div>
+        </article>
+      </div>
+
+      <aside class="study-aside" aria-label="Session tools">
+        <div class="aside-card">
+          <h3><svg class="icon"><use href="#i-target"></use></svg> This session</h3>
+          <div class="aside-stats">
+            <div class="aside-stat good"><b id="asideCorrect">0</b><span>correct</span></div>
+            <div class="aside-stat bad"><b id="asideWrong">0</b><span>missed</span></div>
+            <div class="aside-stat"><b id="asideStreak">0</b><span>streak</span></div>
+          </div>
+          <div style="margin-top:8px;display:flex;align-items:center;justify-content:space-between;font-size:.61rem;font-weight:700;color:var(--muted)">
+            <span>Deck completion</span><span id="asidePercent">0%</span>
+          </div>
+          <div class="progress-track" style="margin-top:4px;height:4px"><span class="progress-fill" id="asideProgress" style="width:0;background:var(--primary)"></span></div>
+        </div>
+        <div class="aside-card">
+          <h3><svg class="icon"><use href="#i-headphones"></use></svg> Audio</h3>
+          <div class="setting-row">
+            <div class="setting-copy"><strong>Sound effects</strong><small>Chimes and taps</small></div>
+            <button class="switch" id="sfxSwitch" role="switch" aria-checked="true" aria-label="Sound effects"></button>
+          </div>
+          <div class="setting-row">
+            <div class="setting-copy"><strong>Auto read cards</strong><small>Speak each new card</small></div>
+            <button class="switch" id="speechSwitch" role="switch" aria-checked="true" aria-label="Read aloud"></button>
+          </div>
+        </div>
+        <div class="aside-card">
+          <h3><svg class="icon"><use href="#i-grid"></use></svg> Shortcuts</h3>
+          <div class="shortcut-list">
+            <div class="shortcut-row"><span>Choose answer</span><span class="keys"><span class="kbd">1</span><span class="kbd">2</span><span class="kbd">3</span><span class="kbd">4</span></span></div>
+            <div class="shortcut-row"><span>Next card</span><span class="kbd">↩</span></div>
+            <div class="shortcut-row"><span>Previous card</span><span class="keys"><span class="kbd">←</span><span class="kbd">→</span></span></div>
+            <div class="shortcut-row"><span>Save card</span><span class="kbd">S</span></div>
+            <div class="shortcut-row"><span>Listen</span><span class="kbd">L</span></div>
+          </div>
+        </div>
+        <div class="aside-card study-tip">
+          <h3><svg class="icon"><use href="#i-bulb"></use></svg> Quick tip</h3>
+          <p id="asideTip">Read the question twice. One small word — <em>since</em>, <em>but</em>, <em>who</em> — often changes the whole answer.</p>
+        </div>
+      </aside>
+    </div>
+  </section>
+
+  <!-- ================= RESULTS ================= -->
+  <section id="screen-results" class="screen is-hidden" aria-labelledby="resultTitle">
+    <div class="shell result-shell">
+      <div class="result-hero" id="resultHero"></div>
+    </div>
+    <div class="shell result-review-shell">
+      <div class="review-section" id="reviewSection"></div>
+      <footer style="margin-top:18px">
+        <span class="foot-brand">Keep going, scholar.</span>
+        <span class="foot-note">A missed card is just a card you haven’t taught yourself yet.</span>
+      </footer>
+    </div>
+  </section>
+</main>
+
+<nav class="bottom-nav" id="bottomNav" aria-label="Mobile navigation">
+  <div class="bottom-nav-inner">
+    <button class="bottom-btn is-active" data-bottom="home"><svg class="icon"><use href="#i-home"></use></svg><span>Library</span></button>
+    <button class="bottom-btn" data-bottom="mix"><svg class="icon"><use href="#i-spark"></use></svg><span>Daily mix</span></button>
+    <button class="bottom-btn" data-bottom="saved"><svg class="icon"><use href="#i-bookmark"></use></svg><span>Saved</span></button>
+    <button class="bottom-btn" data-bottom="grammar"><svg class="icon"><use href="#i-pen"></use></svg><span>Grammar</span></button>
+  </div>
+</nav>
+
+<div class="toast" id="toast" role="status" aria-live="polite"><svg class="icon"><use href="#i-spark"></use></svg><span id="toastText"></span></div>
+<div class="confetti" id="confetti" aria-hidden="true"></div>
+
+<script>
+"use strict";
+
+/* =====================================================================
+   BLOSSOM · Class 8 English study deck
+   Content: WBBSE "Blossoms" lessons 2, 6, 9, 10, 11, 12, 13 + grammar.
+   Built as one self-contained page. No external code beyond Tailwind CDN.
+   ===================================================================== */
+
+const LESSONS = {
+  clouds: { lesson: "2", title: "Clouds", author: "Intizar Hussain", genre: "Short story", icon: "cloud", color: "#6f9fd8", blurb: "A boy chases the clouds that vanished without a shower." },
+  sea: { lesson: "6", title: "The Sea", author: "James Reeves", genre: "Poem", icon: "waves", color: "#2f8f92", blurb: "A giant grey dog rolls, gnaws and howls on the shore." },
+  summer: { lesson: "9", title: "Summer Friends", author: "Mary Lamb", genre: "Poem", icon: "bird", color: "#d09a32", blurb: "A swallow or a sparrow — which friend stays in the frost?" },
+  tales: { lesson: "10", title: "Tales of Childhood", author: "Roald Dahl", genre: "Memoir", icon: "book", color: "#cc7c65", blurb: "Family, memories and a little school called Elmtree House." },
+  midnight: { lesson: "11", title: "Midnight Express", author: "Alfred Noyes", genre: "Mystery story", icon: "train", color: "#7275cc", blurb: "A battered red book and a figure facing the tunnel." },
+  someone: { lesson: "12", title: "Someone", author: "Walter de la Mare", genre: "Poem", icon: "moon-stars", color: "#9a78c9", blurb: "A knock at the door in the still, dark night." },
+  trees: { lesson: "13", title: "The Man Who Planted Trees", author: "Jean Giono", genre: "Short story", icon: "tree", color: "#5f9b62", blurb: "One shepherd, a hundred acorns a day, a forest reborn." }
+};
+
+const TOPICS = {
+  verbs: { label: "Correct Forms of Verbs", icon: "pen", short: "Verb forms", desc: "Agreement, conditionals and verbals." },
+  clauses: { label: "Clauses & Their Kinds", icon: "branch", short: "Clauses", desc: "Noun, adjective and adverb clauses." },
+  joining: { label: "Joining with Clauses", icon: "link", short: "Joining", desc: "Combine ideas with the right connector." },
+  infinitives: { label: "Infinitives", icon: "arrow-right", short: "Infinitives", desc: "To + verb, and bare infinitives." },
+  tense: { label: "Tense", icon: "clock", short: "Tense", desc: "Time, aspect and perfect forms." },
+  narration: { label: "Narration Change", icon: "message", short: "Narration", desc: "Direct to indirect speech." },
+  voice: { label: "Voice Change", icon: "refresh", short: "Voice", desc: "Active and passive voice." },
+  articles: { label: "Articles", icon: "star", short: "Articles", desc: "A, an, the and no article." },
+  prepositions: { label: "Prepositions", icon: "target", short: "Prepositions", desc: "Small words, precise meanings." }
+};
+
+const LESSON_ORDER = ["clouds", "sea", "summer", "tales", "midnight", "someone", "trees"];
+const TOPIC_ORDER = ["verbs", "clauses", "joining", "infinitives", "tense", "narration", "voice", "articles", "prepositions"];
+
+const bank = [];
+const idCounters = {};
+
+function addQ(subject, topic, type, q, options, correct, explanation) {
+  const key = subject + ":" + topic + ":" + type;
+  idCounters[key] = (idCounters[key] || 0) + 1;
+  let index = options.indexOf(correct);
+  let resolved = correct;
+  if (index === -1) {
+    const normalise = value => String(value).trim().toLowerCase().replace(/[.]+$/, "");
+    const alt = options.findIndex(option => normalise(option) === normalise(correct));
+    if (alt !== -1) { index = alt; resolved = options[alt]; }
+  }
+  if (index === -1) {
+    console.warn("Correct option missing:", q);
+    index = 0;
+    resolved = options[0];
+  }
+  const meta = subject === "literature" ? LESSONS[topic] : TOPICS[topic];
+  bank.push({
+    id: topic + "-" + type + "-" + idCounters[key],
+    subject: subject,
+    topic: topic,
+    title: subject === "literature" ? meta.title : meta.label,
+    shortTitle: subject === "literature" ? meta.title : meta.short,
+    type: type,
+    q: q,
+    options: options,
+    answer: type === "mcq" ? index : resolved,
+    answerText: resolved,
+    explanation: explanation
+  });
+}
+
+const LM = (topic, q, options, correct, explanation) => addQ("literature", topic, "mcq", q, options, correct, explanation);
+const LF = (topic, q, options, correct, explanation) => addQ("literature", topic, "fill", q, options, correct, explanation);
+const GM = (topic, q, options, correct, explanation) => addQ("grammar", topic, "mcq", q, options, correct, explanation);
+const GF = (topic, q, options, correct, explanation) => addQ("grammar", topic, "fill", q, options, correct, explanation);
+
+/* ---------------- LESSON 2 · CLOUDS ---------------- */
+LM("clouds", "Who wrote the short story 'Clouds'?", ["Ruskin Bond", "Intizar Hussain", "R. K. Narayan", "James Reeves"], "Intizar Hussain", "Intizar Hussain was a celebrated Pakistani writer who wrote in Urdu.");
+LM("clouds", "What was the original Urdu title of 'Clouds'?", ["Badal", "Barish", "Dhoop", "Mitti"], "Badal", "The Urdu story was called 'Badal', which means clouds.");
+LM("clouds", "Who translated 'Badal' into English as 'Clouds'?", ["Peter Doyle", "Rakshanda Jalil", "Khushwant Singh", "Arundhati Roy"], "Rakshanda Jalil", "Rakshanda Jalil translated Intizar Hussain's 'Badal' into English.");
+LM("clouds", "Whom did the boy ask first about where the clouds had gone?", ["His father", "His teacher", "His mother", "The old man"], "His mother", "In the morning the boy first asked his mother, 'Ammaji, where have the clouds gone?'");
+LM("clouds", "How did the boy's mother respond to his question?", ["She answered patiently", "She scolded him for asking a stupid question", "She began to cry", "She called the neighbours"], "She scolded him for asking a stupid question", "His mother did not value his curiosity and scolded him instead of explaining.");
+LM("clouds", "What was the grass-cutter carrying?", ["A basket of mangoes", "A bundle of freshly cut grass on his head", "A Persian wheel", "A flock of sheep"], "A bundle of freshly cut grass on his head", "The grass-cutter balanced a bundle of freshly cut grass on his head.");
+LM("clouds", "How did the boy feel as he walked between the fields?", ["Cool and refreshed", "His body felt on fire and his throat was dry", "Sleepy and content", "Frightened by thunder"], "His body felt on fire and his throat was dry", "The scorching heat made him terribly thirsty and tired.");
+LM("clouds", "What did the boy see in the middle of the night?", ["A full moon in a clear sky", "Dense black clouds in flashes of lightning", "Stars falling rapidly", "Heavy rain already falling"], "Dense black clouds in flashes of lightning", "He saw dark clouds and lightning, so he expected rain, but morning brought no shower.");
+LM("clouds", "Where did the boy quench his thirst and meet the old man?", ["Beside a river", "Under a tree with a Persian wheel", "At his school well", "Near the village temple"], "Under a tree with a Persian wheel", "He washed and drank water by a Persian wheel and then noticed the old man seated nearby.");
+LM("clouds", "What did the old man say about the place where he once lived?", ["It rained every day", "It had not rained for ten years", "It snowed for six months", "The clouds never came in summer"], "It had not rained for ten years", "The old man remembered a land without rain for ten long years.");
+LM("clouds", "What did the boy do while standing under the jamun tree?", ["He climbed to the top", "He let raindrops fall on his head and face", "He fell fast asleep", "He tied a swing to its branches"], "He let raindrops fall on his head and face", "The freshly bathed jamun tree was still dripping; the boy enjoyed the drops on his face.");
+LM("clouds", "What did the boy notice when he neared his village?", ["The air was chilly and the roads were wet", "Every house had been flooded", "The village was silent and empty", "The fields were cracked and dry"], "The air was chilly and the roads were wet", "The rain had already fallen in his absence, leaving the air cool and the trees freshly washed.");
+LM("clouds", "Why had the rain fallen while the boy was away from his village?", ["The clouds were angry with him", "He had forgotten to call the clouds", "Nature does not wait for a particular person", "Someone had invited the clouds"], "Nature does not wait for a particular person", "The clouds came when conditions suited them; they were not aware of the disappointed boy.");
+LM("clouds", "In the story, the word 'haunted' means that the question ____.", ["appeared as a ghost", "troubled the boy again and again", "frightened him only once", "made him happy"], "troubled the boy again and again", "The question of where the clouds went kept troubling his mind.");
+LF("clouds", "The boy asked, 'Ammaji, where have the ____ gone?'", ["clouds", "trees", "birds", "stars"], "clouds", "This opening question sets the whole story in motion.");
+LF("clouds", "The old man once lived in a place where it had not rained for ____ years.", ["ten", "two", "five", "twelve"], "ten", "His story underlines how vital rain is to life and farming.");
+LF("clouds", "He stood beneath his favourite ____ tree and let the raindrops fall on his face.", ["Jamun", "banyan", "mango", "neem"], "Jamun", "The freshly washed jamun tree is a memorable image near the story's end.");
+LF("clouds", "As the boy neared his village, the air felt ____ and the roads were wet.", ["chilly", "warm", "smoky", "dry"], "chilly", "The cool air and wet roads show the monsoon had arrived.");
+LF("clouds", "The grass-cutter balanced a bundle of freshly cut ____ on his head.", ["grass", "flowers", "straw", "leaves"], "grass", "This small detail opens the boy's round of questions.");
+
+/* ---------------- LESSON 6 · THE SEA ---------------- */
+LM("sea", "Who wrote the poem 'The Sea'?", ["Alfred Noyes", "James Reeves", "Walter de la Mare", "Mary Lamb"], "James Reeves", "The poem is by the English poet James Reeves.");
+LM("sea", "What is the sea compared to throughout the poem?", ["A sleeping child", "A hungry dog", "A grey mountain", "An old sailor"], "A hungry dog", "The central image is the sea as a giant, grey, hungry dog.");
+LM("sea", "Which words are used to describe the sea in the first stanza?", ["Warm and gentle", "Giant and grey", "Small and silver", "Bright and blue"], "Giant and grey", "The sea is presented as a huge, grey, powerful creature.");
+LM("sea", "What does the sea gnaw hour after hour?", ["The sandy dunes", "The rumbling, tumbling stones", "The fishing boats", "The grassy shore"], "The rumbling, tumbling stones", "The waves repeatedly grind the stones on the beach, like a dog chewing bones.");
+LM("sea", "The sea's cry 'Bones, bones, bones!' suggests the sound of ____.", ["hungry dogs", "waves over pebbles", "hammering", "a train"], "waves over pebbles", "The rolling stones on the beach sound like bones being crunched by the sea-dog.");
+LM("sea", "How does the sea behave when the night wind roars?", ["It lies perfectly still", "It bounds up, sniffs, shakes and howls", "It hides under the cliffs", "It turns into a gentle stream"], "It bounds up, sniffs, shakes and howls", "The stormy sea becomes restless and noisy, like an excited dog.");
+LM("sea", "What 'rocks in the stormy cloud'?", ["The moon", "The sea-dog", "The grasses", "The cliffs"], "The moon", "The line 'the moon rocks in the stormy cloud' paints a wild night sky.");
+LM("sea", "How does the sea behave on quiet days in May or June?", ["It howls loudly", "It lies with its head between its paws and scarcely snores", "It bounds over the cliffs", "It disappears from the shore"], "It lies with its head between its paws and scarcely snores", "The final stanza presents a calm, almost sleeping sea.");
+LM("sea", "The line 'The sea is a hungry dog' is an example of ____.", ["a simile", "a metaphor", "alliteration", "personification"], "a metaphor", "A metaphor compares directly, saying the sea is a dog rather than using 'like' or 'as'.");
+LM("sea", "'He rolls on the beach all day' gives the sea human actions. This is an example of ____.", ["onomatopoeia", "personification", "simile", "hyperbole"], "personification", "Giving the sea dog-like or human-like behaviour is personification.");
+LM("sea", "What do the grasses on the dune stop doing on quiet days?", ["Growing", "Playing their reedy tune", "Bending in the wind", "Swaying at night"], "Playing their reedy tune", "On quiet days the grasses 'play no more their reedy tune'.");
+LM("sea", "What is the mood of the final stanza?", ["Violent and frightening", "Calm and peaceful", "Sorrowful and gloomy", "Cheerful and noisy"], "Calm and peaceful", "The quiet snores create a peaceful mood after the storm.");
+LM("sea", "Why does the sea 'bound to his feet' on a stormy night?", ["It is sleepy", "The wild wind stirs the waves into rough movement", "It wants to fetch a bone", "It is searching for the moon"], "The wild wind stirs the waves into rough movement", "The storm turns the calm sea-dog into an excited, howling creature.");
+LM("sea", "Which phrase echoes the rolling, grinding sound of stones?", ["With his head between his paws", "The rumbling, tumbling stones", "So quiet, so quiet", "Giant and grey"], "The rumbling, tumbling stones", "The repeated rumbling and tumbling sounds imitate the movement of stones in the surf.");
+LM("sea", "The poem is best described as a poem about ____.", ["a lost dog", "the changing moods of the sea", "a sea voyage", "a fisherman's day"], "the changing moods of the sea", "Calm and stormy weather mirror the sea-dog's sleeping and roaring moods.");
+LF("sea", "The sea is a hungry ____, giant and grey.", ["dog", "wolf", "lion", "bear"], "dog", "The sea-dog metaphor runs through the whole poem.");
+LF("sea", "The giant sea-dog moans, licking his greasy ____.", ["paws", "jaws", "claws", "whiskers"], "paws", "The image is of a satisfied dog licking its paws.");
+LF("sea", "He howls and hollos long and ____.", ["loud", "deep", "low", "wild"], "loud", "The stormy sea's howls carry far across the cliffs.");
+LF("sea", "So quiet, so quiet, he scarcely ____.", ["snores", "sleeps", "grunts", "wakes"], "snores", "The repetition of 'quiet' creates the calm ending.");
+LF("sea", "The moon rocks in the stormy ____.", ["cloud", "wave", "wind", "night"], "cloud", "The moon appears to rock among the storm clouds.");
+LF("sea", "With his clashing teeth and shaggy ____, the sea-dog gnaws.", ["jaws", "paws", "ears", "tail"], "jaws", "The waves and stones are imaged as a hungry dog's jaws and teeth.");
+
+/* ---------------- LESSON 9 · SUMMER FRIENDS ---------------- */
+LM("summer", "Who wrote the poem 'Summer Friends'?", ["Mary Lamb", "James Reeves", "Mary Shelley", "Walter de la Mare"], "Mary Lamb", "Mary Lamb, the English poet, wrote this poem about loyal friendship.");
+LM("summer", "Which two birds are contrasted in the poem?", ["The parrot and the sparrow", "The swallow and the sparrow", "The owl and the cuckoo", "The sparrow and the crow"], "The swallow and the sparrow", "The swallow is the summer visitor; the sparrow stays through winter.");
+LM("summer", "Where does the swallow make its nest?", ["In the chimney of the poet's house", "In the garden hedge", "Under the roof of a barn", "On a forest branch"], "In the chimney of the poet's house", "The swallow settles in the chimney during the warm months.");
+LM("summer", "When does the swallow leave the poet's home?", ["When summer begins", "When cold winter arrives", "When it rains", "When the sparrow comes"], "When cold winter arrives", "As soon as the warm days end, the swallow flies away.");
+LM("summer", "What kind of friendship does the swallow represent?", ["A loyal friendship", "A fair-weather friendship", "A family bond", "A brief quarrel"], "A fair-weather friendship", "The swallow stays only in pleasant weather, like friends who disappear when trouble comes.");
+LM("summer", "What does the sparrow do during winter?", ["It leaves for a warmer land", "It hides from people", "It clings closer to Man", "It stops eating"], "It clings closer to Man", "The sparrow's need for human company grows greater in the harsh season.");
+LM("summer", "What kind of friend does the poet wish for?", ["One who sings in summer only", "One who loves in sorrow and stays in hardship", "One who is rich and powerful", "One who never speaks"], "One who loves in sorrow and stays in hardship", "The poet admires the sparrow, a friend who remains through frost and sorrow.");
+LM("summer", "What does the phrase 'sing in frost' suggest?", ["Singing only at Christmas", "Staying cheerful and loyal in difficult times", "A love of cold weather", "Forgetting old friends"], "Staying cheerful and loyal in difficult times", "A true friend brings warmth and song even in the cold season of trouble.");
+LM("summer", "What does the word 'crost' in the poem mean?", ["Cross or angry", "Crossed the road", "Cold and frosty", "Lost"], "Cross or angry", "The old, dialectal form 'crost' means cross, that is, angry.");
+LM("summer", "What is the central theme of 'Summer Friends'?", ["The beauty of insects", "True friendship versus fair-weather friendship", "The danger of winter", "The poet's love of travelling"], "True friendship versus fair-weather friendship", "The swallow and sparrow are metaphors for two kinds of friends.");
+LM("summer", "Which bird's chirping fills the poet's house in the happy months?", ["The sparrow", "The swallow", "The nightingale", "The crow"], "The swallow", "The swallow's song makes it feel like a welcome member of the family.");
+LM("summer", "What will the loyal friend do even after a misfortune tomorrow?", ["Leave the poet", "Greet the poet with a smile", "Laugh at the poet", "Forget the poet"], "Greet the poet with a smile", "The poet wants a friend whose affection does not depend on good fortune.");
+LF("summer", "The ____ is a bird of summer and stays only in fine weather.", ["swallow", "sparrow", "cuckoo", "parrot"], "swallow", "Its seasonal visit makes the swallow a fair-weather friend.");
+LF("summer", "In winter the ____ clings closer to Man.", ["sparrow", "swallow", "owl", "dove"], "sparrow", "The sparrow's loyalty in hardship earns the poet's admiration.");
+LF("summer", "The poet wants a friend who will sing with her in ____.", ["frost", "spring", "sunlight", "rain"], "frost", "The line means a friend who stays in difficult times.");
+LF("summer", "The swallow makes her nest in the poet's ____.", ["chimney", "garden", "window", "roof"], "chimney", "Its summer nest in the chimney makes it part of the household.");
+
+/* ---------------- LESSON 10 · TALES OF CHILDHOOD ---------------- */
+LM("tales", "Who wrote 'Tales of Childhood'?", ["Roald Dahl", "Jean Giono", "Intizar Hussain", "Alfred Noyes"], "Roald Dahl", "Roald Dahl was a much-loved British storyteller.");
+LM("tales", "From which book is 'Tales of Childhood' adapted?", ["Boy: Tales of Childhood", "Matilda", "Charlie and the Chocolate Factory", "The Witches"], "Boy: Tales of Childhood", "The lesson is an extract from Dahl's autobiography about his early years.");
+LM("tales", "What kind of writing is 'Tales of Childhood'?", ["A fable", "A memoir", "A play", "A travelogue"], "A memoir", "Dahl looks back on real events from his own childhood.");
+LM("tales", "Roald Dahl's parents were originally from which country?", ["Sweden", "Norway", "Wales", "Denmark"], "Norway", "Dahl was born in Wales to Norwegian parents.");
+LM("tales", "What was Dahl's father's profession?", ["Shipbroker", "Schoolteacher", "Farmer", "Railway guard"], "Shipbroker", "His father worked as a shipbroker in Wales.");
+LM("tales", "How old was Astri when she died?", ["Five", "Seven", "Nine", "Twelve"], "Seven", "Dahl's sister Astri was only seven years old.");
+LM("tales", "Which illness proved fatal for Astri?", ["Appendicitis", "Pneumonia", "Measles", "Chickenpox"], "Appendicitis", "Astri died of appendicitis at the age of seven, before effective antibiotics were available.");
+LM("tales", "Why was pneumonia so dangerous in those days?", ["There was no penicillin or antibiotic to cure it", "Doctors refused to treat children", "There were no hospitals", "The disease spread only in winter"], "There was no penicillin or antibiotic to cure it", "Without penicillin or other antibiotics, pneumonia was very hard to treat.");
+LM("tales", "How did Astri's death affect the narrator's father?", ["He laughed it away", "He was heartbroken and soon lost the will to live", "He moved to Norway immediately", "He blamed his children"], "He was heartbroken and soon lost the will to live", "Grief-stricken, he later caught pneumonia and did not fight the illness.");
+LM("tales", "What was the name of the narrator's first school?", ["Elmtree House", "Hillside School", "Cumberland Lodge", "St Peter's"], "Elmtree House", "Dahl began at Elmtree House, a kindergarten.");
+LM("tales", "Who ran the narrator's first school?", ["Two sisters, Mrs Corfield and Miss Tucker", "Two brothers, Mr and Mrs Jones", "Miss Elmtree alone", "A group of governesses"], "Two sisters, Mrs Corfield and Miss Tucker", "The kindergarten was run by the two sisters.");
+LM("tales", "What was the blurred memory the narrator had of his early days?", ["Learning to write his name", "Trying over and over to tie a shoelace while sitting on the stairs", "Falling from a tree", "Sailing with his father"], "Trying over and over to tie a shoelace while sitting on the stairs", "This is one of the few early memories that remained with him.");
+LM("tales", "How did the narrator enjoy his journeys to and from school?", ["He rode a tricycle with friends", "He travelled by train", "He walked alone in fear", "He rode in a pony cart"], "He rode a tricycle with friends", "The tricycle rides were among the joys of his childhood.");
+LM("tales", "What does the narrator find astonishing about early childhood?", ["That children remember very little of it", "That school days never end", "That parents forget their children", "That childhood is always unhappy"], "That children remember very little of it", "He observes how little a person remembers before the age of seven or eight.");
+LF("tales", "Dahl's first school was called ____ House.", ["Elmtree", "Oakfield", "Cumberland", "Hillside"], "Elmtree", "Elmtree House was a kindergarten run by two sisters.");
+LF("tales", "The kindergarten was run by Mrs Corfield and Miss ____.", ["Tucker", "Dawson", "Benson", "Tanner"], "Tucker", "The two sisters ran the school together.");
+LF("tales", "Astri, the narrator's sister, was ____ years old when she died.", ["seven", "nine", "five", "eleven"], "seven", "Her early death left the family devastated.");
+LF("tales", "Dahl's father earned his living as a ____.", ["shipbroker", "shopkeeper", "doctor", "teacher"], "shipbroker", "He worked in the shipping trade in Wales.");
+LF("tales", "There was no ____ in those days to cure pneumonia.", ["penicillin", "vaccine", "anaesthetic", "surgeon"], "penicillin", "Antibiotics were not yet available.");
+LF("tales", "Dahl enjoyed riding his ____ to and from school.", ["tricycle", "bicycle", "horse", "tractor"], "tricycle", "The journeys with friends were happy memories.");
+
+/* ---------------- LESSON 11 · MIDNIGHT EXPRESS ---------------- */
+LM("midnight", "Who wrote 'Midnight Express'?", ["James Reeves", "Alfred Noyes", "Walter de la Mare", "Roald Dahl"], "Alfred Noyes", "Alfred Noyes wrote this eerie mystery story.");
+LM("midnight", "How old was Mortimer when he found the old book?", ["Ten", "Twelve", "Fifteen", "Twenty"], "Twelve", "He was twelve and reading by candlelight at home.");
+LM("midnight", "Where did Mortimer find the battered old book?", ["In his father's library", "At a railway stall", "In his bedroom cupboard", "At a village fair"], "In his father's library", "He found it in his father's library and took it to his room.");
+LM("midnight", "How was the old book bound?", ["In red leather", "In green cloth", "In black paper", "In golden metal"], "In red leather", "It was a battered old book bound in red leather.");
+LM("midnight", "How far into the book did Mortimer read?", ["Page five", "Page fifty", "Page one hundred", "The last page"], "Page fifty", "He never managed to read beyond page fifty.");
+LM("midnight", "What did the illustration on page fifty show?", ["A stormy sea at night", "An empty railway platform with a single man facing a tunnel", "A crowded market", "A dark library room"], "An empty railway platform with a single man facing a tunnel", "The dull lamp and the tunnel image frightened him deeply.");
+LM("midnight", "Why did Mortimer stop reading at page fifty?", ["He lost the book", "The illustration frightened him for some unknown reason", "His father called him", "The library closed"], "The illustration frightened him for some unknown reason", "The picture made him feel threatened, although he could not explain why.");
+LM("midnight", "Where was Mortimer waiting as a young man one midnight?", ["At a busy city station", "At a dark, empty railway junction", "Outside a hotel", "At the village school"], "At a dark, empty railway junction", "He was alone at the junction under a dull lamp.");
+LM("midnight", "Which figure did Mortimer recognise at the junction?", ["A train driver", "A dark, solitary figure facing the tunnel", "His father", "A policeman"], "A dark, solitary figure facing the tunnel", "The figure matched the illustration from page fifty.");
+LM("midnight", "What shocked Mortimer when he looked into the figure's face?", ["It was completely blank", "It was his own face", "It was the old man from the shop", "It was a mask"], "It was his own face", "The realisation that he was looking at himself is the story's terrifying twist.");
+LM("midnight", "Where did Mortimer take shelter after running away?", ["At a small white cottage", "In a church", "Inside a tunnel", "At the railway waiting room"], "At a small white cottage", "He pounded on the wooden door, seeking desperate shelter.");
+LM("midnight", "Who opened the cottage door?", ["A shadowy figure holding a candle", "A young girl", "The station master", "Mortimer's father"], "A shadowy figure holding a candle", "The silent host beckons him inside and up the creaking stairs.");
+LM("midnight", "What did Mortimer find on the oak table in the upper room?", ["A map of the railway", "The same battered book from his childhood", "A family photograph", "A lit lamp and a letter"], "The same battered book from his childhood", "The red-leather book proves that the old story is repeating itself.");
+LM("midnight", "In this lesson, 'Midnight Express' is actually the title of ____.", ["the book's inner story", "a real express train", "the railway junction", "the cottage"], "the book's inner story", "It is the strange story contained in Mortimer's red-leather book.");
+LM("midnight", "What is the strange cycle of events in the story?", ["The book's events begin to happen in Mortimer's real life", "The railway timetable repeats daily", "Mortimer keeps missing his train", "The cottage is repaired again and again"], "The book's events begin to happen in Mortimer's real life", "The story traps Mortimer in the very events he once read about.");
+LM("midnight", "What does 'battered' mean when describing the old book?", ["Brand new and shining", "Old and damaged by use", "Wrapped in cloth", "Written in a foreign language"], "Old and damaged by use", "The worn book is battered from years of handling.");
+LM("midnight", "What does 'solitary' mean in 'a dark and solitary figure'?", ["Lonely or alone", "Very tall", "Noisy and restless", "Invisible"], "Lonely or alone", "The single figure standing alone faces the dark tunnel.");
+LF("midnight", "Mortimer found the battered book in his father's ____.", ["library", "bedroom", "shop", "cupboard"], "library", "He found it as a boy and took it to read by candlelight.");
+LF("midnight", "The old book was bound in ____ leather.", ["red", "black", "green", "brown"], "red", "The vivid red binding helps him recognise it years later.");
+LF("midnight", "The frightening illustration appeared on page ____.", ["fifty", "fifteen", "forty", "fifty-five"], "fifty", "Mortimer could never read beyond that page.");
+LF("midnight", "Mortimer saw a dark and solitary ____ facing the black tunnel.", ["figure", "train", "house", "dog"], "figure", "It was the same figure he had seen in the illustration.");
+LF("midnight", "When he looked into its face, Mortimer saw his own ____.", ["face", "book", "shadow", "reflection"], "face", "The doppelganger twist makes the story deeply unsettling.");
+
+/* ---------------- LESSON 12 · SOMEONE ---------------- */
+LM("someone", "Who wrote the poem 'Someone'?", ["Mary Lamb", "Walter de la Mare", "James Reeves", "Alfred Noyes"], "Walter de la Mare", "Walter de la Mare was known for his mysterious, musical poetry.");
+LM("someone", "Where did someone come knocking?", ["At the poet's wee, small door", "At the poet's window", "At the forest gate", "At a castle gate"], "At the poet's wee, small door", "The opening line repeats this knock for a haunting effect.");
+LM("someone", "What did the poet do after hearing the knocking?", ["He hid under the bed", "He listened, opened the door and looked left and right", "He called for help", "He went back to sleep"], "He listened, opened the door and looked left and right", "He acted curious and brave, but found nothing.");
+LM("someone", "What did the poet see outside the door?", ["A stranger with a lamp", "Nothing was stirring", "A white horse", "The screech-owl"], "Nothing was stirring", "There was no person outside in the still, dark night.");
+LM("someone", "How is the night described in the poem?", ["Still and dark", "Bright and windy", "Rainy and warm", "Snowy and noisy"], "Still and dark", "The stillness makes the little sounds of nature stand out.");
+LM("someone", "Where was the busy beetle making its sound?", ["Tap-tapping in the wall", "Whistling on a leaf", "Singing on the door", "Crawling in the forest"], "Tap-tapping in the wall", "The beetle's tap-tapping is one of the quiet night sounds.");
+LM("someone", "From where did the screech-owl call?", ["The forest", "The village", "The riverbank", "The chimney"], "The forest", "Only the screech-owl's call came from the forest.");
+LM("someone", "What was the cricket doing?", ["Whistling while the dewdrops fell", "Chirping under the door", "Sleeping in the wall", "Flying around the lamp"], "Whistling while the dewdrops fell", "The cricket is heard whistling as the dew falls.");
+LM("someone", "Why does the poet repeat 'at all' at the end?", ["To make the poem longer", "To stress that he never discovered who knocked", "To rhyme with 'wall'", "To describe the door"], "To stress that he never discovered who knocked", "The repetition deepens the mystery and the speaker's uncertainty.");
+LM("someone", "Which creatures are mentioned in the poem?", ["A beetle, a screech-owl and a cricket", "A dog, a cat and an owl", "A swallow, a sparrow and a beetle", "A beetle, a serpent and a bat"], "A beetle, a screech-owl and a cricket", "Their small sounds fill the night while the knocker remains unseen.");
+LM("someone", "What is the mood of the poem?", ["Cheerful and comic", "Mysterious and suspenseful", "Angry and argumentative", "Sad and regretful"], "Mysterious and suspenseful", "The unanswered knock keeps the reader in gentle suspense.");
+LM("someone", "What does 'wee' mean in 'my wee, small door'?", ["Very small", "Very old", "Made of wood", "Wide open"], "Very small", "The word gives the home a humble, intimate feel.");
+LM("someone", "The phrase 'tap-tapping' is an example of ____.", ["onomatopoeia", "simile", "metaphor", "hyperbole"], "onomatopoeia", "The words imitate the actual sound the beetle makes.");
+LM("someone", "Who, according to the poem, actually came knocking?", ["A friendly neighbour", "The poet's mother", "It is never revealed", "The screech-owl"], "It is never revealed", "The poem keeps the identity a mystery on purpose.");
+LF("someone", "Someone came knocking at my wee, small ____.", ["door", "window", "gate", "wall"], "door", "The knock at the little door begins the mystery.");
+LF("someone", "Only the busy ____ tap-tapping in the wall.", ["beetle", "cricket", "owl", "spider"], "beetle", "Its tiny tap is one of the only sounds in the house.");
+LF("someone", "Only from the ____ came the screech-owl's call.", ["forest", "garden", "roof", "river"], "forest", "The owl's call is carried from the forest nearby.");
+LF("someone", "The cricket was ____ while the dewdrops fell.", ["whistling", "singing", "chirping", "sleeping"], "whistling", "The cricket's whistle adds to the quiet night music.");
+
+/* ---------------- LESSON 13 · THE MAN WHO PLANTED TREES ---------------- */
+LM("trees", "Who wrote 'The Man Who Planted Trees'?", ["Roald Dahl", "Jean Giono", "Intizar Hussain", "James Reeves"], "Jean Giono", "Jean Giono was a French author who loved the natural world.");
+LM("trees", "Who translated 'The Man Who Planted Trees' into English?", ["Peter Doyle", "Rakshanda Jalil", "Alfred Noyes", "Mary Lamb"], "Peter Doyle", "Peter Doyle's English translation is used in the lesson.");
+LM("trees", "In which country is the story set?", ["France", "Norway", "India", "England"], "France", "The story unfolds in a dry, desolate region of the French Alps.");
+LM("trees", "What was the land like when the narrator first arrived?", ["Green and full of streams", "Dry, barren and windswept", "Covered with thick forest", "Busy with a large town"], "Dry, barren and windswept", "The wind whistled endlessly and the village had been abandoned.");
+LM("trees", "What was the shepherd's name?", ["Elzéard Bouffier", "Mortimer", "Harold Dahl", "Intizar Hussain"], "Elzéard Bouffier", "Elzéard Bouffier is the quiet hero of the story.");
+LM("trees", "How old was the shepherd when the narrator first met him?", ["Forty-five", "Fifty-five", "Sixty-five", "Seventy"], "Fifty-five", "He was fifty-five and had been planting for three years.");
+LM("trees", "What was the shepherd planting?", ["Acorns", "Wheat seeds", "Flower bulbs", "Pine cones"], "Acorns", "He planted acorns to grow oak trees.");
+LM("trees", "How did the shepherd plant each acorn?", ["He dropped it into a river", "He pounded a hole with an iron rod, placed the acorn and covered it", "He buried it with his bare hands", "He gave it to his dog"], "He pounded a hole with an iron rod, placed the acorn and covered it", "The iron rod made hole after hole in the hard ground.");
+LM("trees", "How many of the hundred thousand acorns actually came up?", ["Twenty thousand", "Fifty thousand", "One hundred thousand", "Two thousand"], "Twenty thousand", "Only one in five acorns sprouted, yet that was enough to begin.");
+LM("trees", "Why did the shepherd give up keeping sheep?", ["He became too old", "Sheep ate the young saplings", "He moved to the city", "Wolves took the flock"], "Sheep ate the young saplings", "He later kept bees, which did no harm to the growing trees.");
+LM("trees", "How many years later did the narrator revisit the country?", ["Five years", "Ten years", "Twenty years", "Forty years"], "Ten years", "After the war he returned and found a wonderful change.");
+LM("trees", "How large was the forest of oaks the shepherd had created?", ["Eleven kilometres long and three kilometres wide", "Three kilometres long and eleven kilometres wide", "One kilometre long and one wide", "Twenty kilometres long and five wide"], "Eleven kilometres long and three kilometres wide", "The enormous forest seemed like a miracle.");
+LM("trees", "What happened to the dry springs and the village?", ["The springs dried up further", "Water returned and the village began to revive", "The people all left", "A new factory was built"], "Water returned and the village began to revive", "The forest held water in the soil and brought life back to the land.");
+LM("trees", "What did the narrator think of the shepherd's work?", ["It was a waste of time", "It seemed like a divine act", "It was ordinary farm work", "It was a dangerous mistake"], "It seemed like a divine act", "One man had created a vast forest without machines or help.");
+LM("trees", "Why did the Second World War not disturb the shepherd's mission?", ["He was protected by soldiers", "He was single-minded and lived in a lonely area", "He stopped planting during the war", "He moved away"], "He was single-minded and lived in a lonely area", "His purpose remained planting trees, even amid a world at war.");
+LM("trees", "What is the main theme of the story?", ["The importance of money", "Patience and ecological restoration by one person", "The danger of travel", "The life of a soldier"], "Patience and ecological restoration by one person", "Quiet perseverance can heal a landscape and its people.");
+LM("trees", "What does 'desolate' mean in the description of the country?", ["Crowded and noisy", "Bare and deserted", "Rich and fertile", "Warm and welcoming"], "Bare and deserted", "The empty, infertile land has no water or people at first.");
+LM("trees", "What did the shepherd give the narrator during their first meeting?", ["A drink and a warm shelter for the night", "A bag of acorns", "A map of the Alps", "A new dog"], "A drink and a warm shelter for the night", "His quiet hospitality touched the thirsty traveller.");
+LM("trees", "Which trees did the shepherd plant besides oaks?", ["Beech and birch", "Mango and neem", "Pine and palm", "Willow and poplar"], "Beech and birch", "He added beech and birch trees as his work continued.");
+LF("trees", "The shepherd's name was Elzéard ____.", ["Bouffier", "Dahl", "Noyes", "Hussain"], "Bouffier", "Elzéard Bouffier quietly transformed the region.");
+LF("trees", "The shepherd planted thousands of ____ in the dry ground.", ["acorns", "seeds of wheat", "flowers", "mango stones"], "acorns", "From these acorns grew the great oak forest.");
+LF("trees", "He pounded the ground with an iron ____ to make a hole.", ["rod", "spade", "hammer", "axe"], "rod", "The iron rod made planting quick but back-breaking work.");
+LF("trees", "The narrator revisited the region after ____ years.", ["ten", "five", "twenty", "three"], "ten", "Ten years later, the land had been transformed.");
+LF("trees", "The forest he created was eleven kilometres long and ____ kilometres wide.", ["three", "five", "eight", "eleven"], "three", "The scale of the forest amazed the narrator.");
+
+/* ---------------- CORRECT FORMS OF VERBS ---------------- */
+GM("verbs", "She ____ to school by bus every day.", ["go", "goes", "went", "going"], "goes", "A daily routine takes the simple present. With 'she', add -s or -es.");
+GM("verbs", "Look! The children ____ in the park.", ["play", "played", "are playing", "have played"], "are playing", "'Look!' signals an action happening now, so use the present continuous.");
+GM("verbs", "He ____ in this town since 2015.", ["lives", "lived", "has lived", "is living"], "has lived", "With 'since' + a starting point, use the present perfect.");
+GM("verbs", "If it ____ tomorrow, we will cancel the match.", ["rains", "rained", "would rain", "raining"], "rains", "In a first conditional, the if-clause uses the simple present and the main clause uses 'will'.");
+GM("verbs", "The train ____ before we reached the station.", ["left", "had left", "has left", "leaves"], "had left", "Past perfect shows the earlier of two past actions.");
+GM("verbs", "Neither the teacher nor the students ____ present.", ["was", "were", "is", "be"], "were", "With 'neither ... nor', the verb usually agrees with the nearer subject, 'students'.");
+GM("verbs", "Each of the players ____ a medal.", ["have received", "has received", "are receiving", "were received"], "has received", "'Each' is singular, so it takes a singular verb.");
+GM("verbs", "I wish I ____ taller.", ["am", "was", "is", "were"], "were", "Wishes about an unreal present use the subjunctive 'were'.");
+GM("verbs", "It is high time we ____ the matter seriously.", ["discuss", "discussed", "have discussed", "will discuss"], "discussed", "'It is high time' is followed by the past tense to show an overdue action.");
+GM("verbs", "She talks as if she ____ everything.", ["knows", "knew", "know", "has known"], "knew", "'As if' describing an unreal situation takes the past subjunctive.");
+GM("verbs", "My father ____ breakfast when the phone rang.", ["has", "had", "was having", "have"], "was having", "A continuous past action was interrupted by a shorter past action.");
+GM("verbs", "The number of students ____ risen this year.", ["have", "has", "are", "were"], "has", "'The number of ...' is singular, so it takes 'has'.");
+GF("verbs", "Rina ____ to school every day.", ["goes", "go", "going", "went"], "goes", "Simple present, third person singular: goes.");
+GF("verbs", "If it ____ tomorrow, we will stay at home.", ["rains", "rained", "would rain", "is raining"], "rains", "First conditional: if + simple present, will + base verb.");
+GF("verbs", "Look! The baby ____ peacefully.", ["is sleeping", "sleeps", "slept", "was sleeping"], "is sleeping", "'Look!' points to an action in progress now.");
+GF("verbs", "Each of the boys ____ a new pen.", ["has", "have", "are", "were"], "has", "'Each' is singular, so use 'has'.");
+
+/* ---------------- TENSE ---------------- */
+GM("tense", "Identify the tense: 'She is reading a novel.'", ["Simple present", "Present continuous", "Present perfect", "Past continuous"], "Present continuous", "The structure is am/is/are + present participle (reading).");
+GM("tense", "Identify the tense: 'They have completed the project.'", ["Simple past", "Present perfect", "Past perfect", "Future perfect"], "Present perfect", "Have/has + past participle shows a completed action with a present link.");
+GM("tense", "Identify the tense: 'He will be travelling tomorrow evening.'", ["Future simple", "Future continuous", "Future perfect", "Present continuous"], "Future continuous", "Will be + -ing describes an action in progress in the future.");
+GM("tense", "By 2030, scientists ____ a cure for the disease.", ["find", "found", "will have found", "are finding"], "will have found", "An action completed before a future point takes the future perfect.");
+GM("tense", "The earth ____ around the sun.", ["revolve", "revolved", "revolves", "is revolving"], "revolves", "Universal truths take the simple present.");
+GM("tense", "I ____ him at the market yesterday.", ["have met", "met", "meet", "had met"], "met", "'Yesterday' points to a finished past time, so use the simple past.");
+GM("tense", "We ____ here since morning.", ["wait", "waited", "have been waiting", "had waited"], "have been waiting", "An action continuing from a past point to now takes the present perfect continuous.");
+GM("tense", "When I reached the station, the train ____.", ["has already left", "already leaves", "had already left", "will leave"], "had already left", "The earlier past action is expressed in the past perfect.");
+GM("tense", "While she ____ dinner, the lights went out.", ["cooks", "cooked", "was cooking", "has cooked"], "was cooking", "'While' signals an ongoing past action, so use the past continuous.");
+GM("tense", "He ____ to Delhi next week.", ["has gone", "went", "is going", "goes"], "is going", "The present continuous can express a fixed future arrangement.");
+GF("tense", "The train ____ before we arrived at the station.", ["had left", "leaves", "has left", "was leaving"], "had left", "Past perfect marks the action completed before another past action.");
+GF("tense", "By next June, she ____ her course.", ["will have completed", "completes", "completed", "is completing"], "will have completed", "Future perfect: will have + past participle.");
+GF("tense", "Water ____ at 100 degrees Celsius.", ["boils", "boiled", "is boiling", "has boiled"], "boils", "A scientific fact takes the simple present.");
+GF("tense", "They ____ football for an hour.", ["have been playing", "played", "play", "had played"], "have been playing", "Action continuing up to now takes the present perfect continuous.");
+
+/* ---------------- CLAUSES & THEIR KINDS ---------------- */
+GM("clauses", "A group of words that contains a subject and a predicate and forms part of a larger sentence is called a ____.", ["phrase", "clause", "paragraph", "predicate"], "clause", "A clause has both a subject and a finite verb; a phrase does not.");
+GM("clauses", "Which clause can stand alone and make complete sense?", ["Subordinate clause", "Main or independent clause", "Relative clause", "Noun clause"], "Main or independent clause", "An independent clause expresses a complete thought.");
+GM("clauses", "'I know that he is honest.' The underlined clause 'that he is honest' is a ____.", ["noun clause", "adjective clause", "adverb clause", "main clause"], "noun clause", "It works as the object of the verb 'know'.");
+GM("clauses", "'The man who is wearing a blue shirt is my uncle.' The clause 'who is wearing a blue shirt' is a ____.", ["noun clause", "adjective clause", "adverb clause", "principal clause"], "adjective clause", "It qualifies the noun 'man', like an adjective.");
+GM("clauses", "'We stayed home because it was raining.' The clause introduced by 'because' is an adverb clause of ____.", ["time", "reason", "condition", "result"], "reason", "'Because' answers the question 'why?'.");
+GM("clauses", "'What she said surprised everyone.' The clause 'What she said' is a ____.", ["noun clause", "adjective clause", "adverb clause", "relative clause"], "noun clause", "The whole clause acts as the subject of 'surprised'.");
+GM("clauses", "'If you study hard, you will succeed.' The if-clause is an adverb clause of ____.", ["place", "condition", "manner", "purpose"], "condition", "'If' introduces a condition that must be met.");
+GM("clauses", "'He ran so fast that he won the race.' The clause 'that he won the race' is an adverb clause of ____.", ["reason", "result", "contrast", "time"], "result", "'so ... that' signals the result of the action.");
+GM("clauses", "'I do not know where she lives.' The clause 'where she lives' is a ____.", ["noun clause", "adjective clause", "adverb clause", "main clause"], "noun clause", "It acts as the object of the verb 'know'.");
+GM("clauses", "'The book which I bought is interesting.' The clause 'which I bought' is a ____.", ["noun clause", "adjective clause", "adverb clause", "principal clause"], "adjective clause", "It describes the noun 'book'.");
+GF("clauses", "A clause that can stand alone is called an ____ clause.", ["independent", "dependent", "subordinate", "noun"], "independent", "An independent main clause makes complete sense by itself.");
+GF("clauses", "We stayed home ____ it was raining.", ["because", "although", "unless", "so"], "because", "'Because' introduces a reason and an adverb clause of reason.");
+GF("clauses", "'I know that he is honest' contains a ____ clause.", ["noun", "adjective", "adverb", "relative"], "noun", "The clause serves as the object of 'know'.");
+
+/* ---------------- JOINING WITH CLAUSES ---------------- */
+GM("joining", "Join the pair: He was ill. He could not attend school.", ["He was ill so that could not attend school.", "Since he was ill, he could not attend school.", "He was ill until he could not attend school.", "Though he was ill, he could attend school."], "Since he was ill, he could not attend school.", "'Since' joins the two ideas with a clause of reason.");
+GM("joining", "Join the pair: The boy is my cousin. He is standing at the gate.", ["The boy is my cousin who standing at the gate.", "The boy who is standing at the gate is my cousin.", "The boy which is standing at the gate is my cousin.", "The boy is standing at the gate he is my cousin."], "The boy who is standing at the gate is my cousin.", "'Who' begins an adjective clause describing 'the boy'.");
+GM("joining", "Join the pair: Work hard. You will succeed.", ["If you work hard, you will succeed.", "Although you work hard, you will succeed.", "Work hard because you will succeed.", "Work hard so that you will succeed."], "If you work hard, you will succeed.", "A condition is expressed with 'if' and an adverb clause of condition.");
+GM("joining", "Join the pair: She spoke loudly. Everyone could hear her.", ["She spoke loudly so that everyone could hear her.", "She spoke loudly because everyone could hear her.", "Although she spoke loudly, everyone could hear her.", "She spoke loudly unless everyone could hear her."], "She spoke loudly so that everyone could hear her.", "'So that' introduces an adverb clause of purpose.");
+GM("joining", "Join the pair: I do not know. Where does he live?", ["I do not know which he lives.", "I do not know where he lives.", "I do not know where does he live.", "I do not know that where he lives."], "I do not know where he lives.", "In indirect questions, the subject comes before the verb.");
+GM("joining", "Join the pair: Wait here. I return.", ["Wait here until I return.", "Wait here because I return.", "Wait here although I return.", "Wait here so that I return."], "Wait here until I return.", "'Until' introduces an adverb clause of time.");
+GM("joining", "Join the pair: He is rich. He is not happy.", ["Because he is rich, he is not happy.", "Although he is rich, he is not happy.", "So that he is rich, he is not happy.", "Unless he is rich, he is not happy."], "Although he is rich, he is not happy.", "'Although' joins contrasting ideas.");
+GM("joining", "Join the pair: This is the village. I was born here.", ["This is the village where I was born.", "This is the village which I was born.", "This is the village who I was born.", "This is the village when I was born."], "This is the village where I was born.", "'Where' introduces a relative clause of place.");
+GF("joining", "I do not know ____ she lives.", ["where", "which", "who", "that"], "where", "The embedded question becomes a noun clause with 'where'.");
+GF("joining", "He worked hard ____ he might succeed.", ["so that", "because", "although", "unless"], "so that", "'So that' introduces a clause of purpose.");
+
+/* ---------------- INFINITIVES ---------------- */
+GM("infinitives", "An infinitive is formed by using ____.", ["to + base form of the verb", "base verb + -ing", "base verb + -ed", "to + past participle"], "to + base form of the verb", "For example, 'to read', 'to write', 'to plant'.");
+GM("infinitives", "In 'She went to the market to buy fruit', the infinitive 'to buy' expresses ____.", ["purpose", "contrast", "time", "condition"], "purpose", "It answers the question: why did she go?");
+GM("infinitives", "He is too weak ____ the heavy box.", ["lift", "to lift", "lifting", "lifted"], "to lift", "The pattern 'too + adjective + to + verb' expresses an impossibility.");
+GM("infinitives", "The baby was made ____ the medicine.", ["take", "to take", "taking", "taken"], "to take", "In the passive, 'make' is followed by a to-infinitive: was made to take.");
+GM("infinitives", "The teacher made the students ____ the poem aloud.", ["recite", "to recite", "reciting", "recited"], "recite", "After 'make' in the active voice, use the bare infinitive without 'to'.");
+GM("infinitives", "My parents let me ____ late.", ["to stay", "stay", "staying", "stayed"], "stay", "'Let' takes a bare infinitive without 'to'.");
+GM("infinitives", "He promised ____ me with my work.", ["help", "to help", "helping", "helped"], "to help", "'Promise' is normally followed by a to-infinitive.");
+GM("infinitives", "In 'To forgive is divine', the infinitive 'To forgive' works as the ____.", ["object", "subject", "adverb", "adjective"], "subject", "The infinitive phrase names the action that is being described.");
+GM("infinitives", "Choose the sentence with the correctly used infinitive.", ["She suggested to go home.", "He refused to answer the question.", "They enjoyed to play cricket.", "I look forward to meet you."], "He refused to answer the question.", "'Refuse' takes a to-infinitive; the other verbs need different patterns.");
+GF("infinitives", "She went to the market ____ some fruit.", ["to buy", "buy", "buying", "bought"], "to buy", "The infinitive expresses the purpose of her visit.");
+GF("infinitives", "The teacher let us ____ early.", ["leave", "to leave", "leaving", "left"], "leave", "'Let' is followed by a bare infinitive.");
+GF("infinitives", "He is too tired ____ any further.", ["to walk", "walk", "walking", "walked"], "to walk", "The pattern 'too ... to' uses a to-infinitive.");
+
+/* ---------------- NARRATION CHANGE ---------------- */
+GM("narration", "Change to indirect speech: He said, 'I am tired.'", ["He said that he is tired.", "He said that he was tired.", "He says that he was tired.", "He said that I was tired."], "He said that he was tired.", "The reporting verb is past, so present 'am' becomes past 'was'.");
+GM("narration", "Change to indirect speech: She said to me, 'Please help me.'", ["She said me to help her.", "She requested me to help her.", "She requested that I help me.", "She asked me please help me."], "She requested me to help her.", "'Please' shows a request: requested + object + to-infinitive.");
+GM("narration", "Change to indirect speech: The teacher said, 'Water boils at 100 degrees Celsius.'", ["The teacher said that water boiled at 100 degrees Celsius.", "The teacher said that water boils at 100 degrees Celsius.", "The teacher asked if water boils at 100 degrees Celsius.", "The teacher says water is boiling at 100 degrees Celsius."], "The teacher said that water boils at 100 degrees Celsius.", "Universal truths keep their present tense in indirect speech.");
+GM("narration", "Change to indirect speech: He said, 'Where is the station?'", ["He said where the station is.", "He asked where the station was.", "He asked where was the station.", "He said that where was the station."], "He asked where the station was.", "A wh-question becomes an indirect question with statement word order.");
+GM("narration", "Change to indirect speech: She said, 'I will call you tomorrow.'", ["She said that she will call me tomorrow.", "She said that she would call me the next day.", "She asked if she would call me the next day.", "She said that I would call her tomorrow."], "She said that she would call me the next day.", "'Will' becomes 'would', and 'tomorrow' becomes 'the next day'.");
+GM("narration", "Change to indirect speech: Rita said, 'What a beautiful garden!'", ["Rita said that a beautiful garden.", "Rita exclaimed that the garden was very beautiful.", "Rita asked if the garden was beautiful.", "Rita exclaimed that was the garden beautiful."], "Rita exclaimed that the garden was very beautiful.", "Exclamatory sentences use an exclaiming verb and change 'what a' to 'very'.");
+GM("narration", "Change to indirect speech: Father said to me, 'Do not touch the wire.'", ["Father told me do not touch the wire.", "Father warned me not to touch the wire.", "Father said me not to touch the wire.", "Father asked me that I do not touch the wire."], "Father warned me not to touch the wire.", "A negative command becomes warned/told + object + not to + verb.");
+GM("narration", "Change to indirect speech: Tom said, 'Can I use your pen?'", ["Tom asked if he could use my pen.", "Tom said if he can use my pen.", "Tom asked that he could use your pen.", "Tom asked if could he use my pen."], "Tom asked if he could use my pen.", "'Can' becomes 'could'; a yes/no question uses if or whether and statement word order.");
+GF("narration", "Rina said that she ____ busy.", ["was", "is", "are", "will be"], "was", "The reporting verb is in the past, so the present 'is' becomes 'was'.");
+GF("narration", "The teacher asked us ____ we had done our homework.", ["whether", "that", "which", "what"], "whether", "A yes/no question in indirect speech takes if or whether.");
+GF("narration", "Mother told me ____ touch the stove.", ["not to", "to not", "do not", "did not"], "not to", "Negative commands use 'told me not to + verb'.");
+
+/* ---------------- VOICE CHANGE ---------------- */
+GM("voice", "Change to passive voice: The cat killed the rat.", ["The rat was killed by the cat.", "The rat is killed by the cat.", "The cat was killed by the rat.", "The rat killed the cat."], "The rat was killed by the cat.", "Simple past active becomes was/were + past participle.");
+GM("voice", "Change to passive voice: She is watering the plants.", ["The plants are watered by her.", "The plants are being watered by her.", "The plants were being watered by her.", "The plants have been watered by her."], "The plants are being watered by her.", "Present continuous passive uses is/are being + past participle.");
+GM("voice", "Change to passive voice: They have completed the bridge.", ["The bridge was completed by them.", "The bridge has been completed by them.", "The bridge is completed by them.", "The bridge had completed them."], "The bridge has been completed by them.", "Present perfect passive uses has/have been + past participle.");
+GM("voice", "Change to passive voice: He will publish the book.", ["The book will publish by him.", "The book will be published by him.", "The book is published by him.", "The book has been published by him."], "The book will be published by him.", "Future passive uses will be + past participle.");
+GM("voice", "Change to passive voice: People speak English everywhere.", ["English is spoken everywhere.", "English was spoken everywhere.", "English speaks everywhere.", "English is speaking everywhere."], "English is spoken everywhere.", "The agent 'people' can be dropped in the passive.");
+GM("voice", "Change to passive voice: Did you write this poem?", ["Was this poem written by you?", "Did this poem written by you?", "Was this poem write by you?", "Is this poem written by you?"], "Was this poem written by you?", "A past simple question becomes was/were + subject + past participle.");
+GM("voice", "Change to passive voice: You must obey your parents.", ["Your parents must obey you.", "Your parents must be obeyed by you.", "Your parents must been obeyed.", "Your parents are obeyed by you must."], "Your parents must be obeyed by you.", "After a modal, use be + past participle.");
+GM("voice", "Change to passive voice: Let him do the work.", ["Let the work be done by him.", "Let the work is done by him.", "The work lets him do.", "Let him be done the work."], "Let the work be done by him.", "The imperative with let becomes 'Let + object + be + past participle'.");
+GM("voice", "Change to passive voice: Open the door.", ["The door is opened.", "Let the door be opened.", "The door opens by you.", "The door was opened."], "Let the door be opened.", "An imperative without an object-agent becomes 'Let + object + be + past participle'.");
+GF("voice", "The letter ____ written by Rahul yesterday.", ["was", "were", "is", "are"], "was", "A singular subject in the past passive takes 'was'.");
+GF("voice", "A new bridge ____ being built across the river.", ["is", "are", "has", "be"], "is", "Present continuous passive: is/are being + past participle.");
+GF("voice", "Let the window ____ opened.", ["be", "is", "was", "been"], "be", "The passive imperative pattern is 'Let ... be + past participle'.");
+
+/* ---------------- ARTICLES ---------------- */
+GM("articles", "He is ____ honest man.", ["a", "an", "the", "no article"], "an", "'Honest' begins with a vowel sound, so use 'an'.");
+GM("articles", "I saw ____ one-legged bird near the pond.", ["a", "an", "the", "no article"], "a", "'One' begins with the consonant sound /w/, so use 'a'.");
+GM("articles", "____ Ganga is a sacred river.", ["A", "An", "The", "No article"], "The", "Names of rivers take the definite article.");
+GM("articles", "Mount Everest is ____ highest peak in the world.", ["a", "an", "the", "no article"], "the", "Superlatives take 'the'.");
+GM("articles", "She is ____ M.A. in History.", ["a", "an", "the", "no article"], "an", "The letter M is pronounced 'em', which begins with a vowel sound.");
+GM("articles", "My uncle is ____ European engineer.", ["a", "an", "the", "no article"], "a", "'European' begins with the consonant sound /j/.");
+GM("articles", "We usually travel to school by ____ bus.", ["a", "an", "the", "no article"], "no article", "In 'by + means of transport', no article is used.");
+GM("articles", "____ gold is a precious metal.", ["A", "An", "The", "No article"], "No article", "Uncountable nouns used in a general sense take no article.");
+GM("articles", "He bought ____ umbrella and a raincoat.", ["a", "an", "the", "no article"], "an", "'Umbrella' begins with a vowel sound.");
+GF("articles", "She is ____ M.A. in English.", ["an", "a", "the", "no article"], "an", "The spoken form of M begins with a vowel sound.");
+GF("articles", "____ sun rises in the east.", ["The", "A", "An", "No article"], "The", "There is only one sun, so the definite article is used.");
+GF("articles", "He is ____ best player in the team.", ["the", "a", "an", "no article"], "the", "Superlative adjectives take 'the'.");
+
+/* ---------------- PREPOSITIONS ---------------- */
+GM("prepositions", "She has been ill ____ Monday.", ["for", "since", "from", "by"], "since", "'Since' is used with a starting point in time.");
+GM("prepositions", "He is very good ____ mathematics.", ["in", "at", "on", "for"], "at", "The fixed expression is 'good at' a subject or skill.");
+GM("prepositions", "The children divided the sweets ____ themselves.", ["between", "among", "with", "beside"], "among", "'Among' is used for more than two people or things.");
+GM("prepositions", "We must beware ____ pickpockets in a crowd.", ["from", "of", "with", "to"], "of", "'Beware of' is the correct fixed expression.");
+GM("prepositions", "The meeting began exactly ____ 10 a.m.", ["at", "on", "in", "by"], "at", "A precise clock time takes the preposition 'at'.");
+GM("prepositions", "He has been living in Delhi ____ 2019.", ["for", "since", "from", "in"], "since", "'Since' introduces the starting point of a continuing situation.");
+GM("prepositions", "Please listen ____ me carefully.", ["at", "to", "with", "for"], "to", "We listen to someone or something.");
+GM("prepositions", "The cat jumped ____ the wall and disappeared.", ["over", "on", "at", "in"], "over", "'Over' shows movement from one side of something to the other.");
+GM("prepositions", "She is angry ____ her brother for breaking her pen.", ["on", "with", "at", "for"], "with", "We are angry with a person and angry at/about a thing.");
+GM("prepositions", "The old man died ____ malaria.", ["from", "of", "by", "with"], "of", "We generally die of a disease.");
+GF("prepositions", "I have known her ____ childhood.", ["since", "for", "from", "by"], "since", "Childhood is a starting point, so 'since' is used.");
+GF("prepositions", "The cat hid ____ the sofa.", ["under", "on", "over", "into"], "under", "'Under' means directly below something.");
+GF("prepositions", "She apologised ____ being late.", ["for", "of", "to", "at"], "for", "We apologise for an action or fault.");
+
+/* ---------------- Small utilities ---------------- */
+const $ = (sel, root = document) => root.querySelector(sel);
+const $$ = (sel, root = document) => Array.from(root.querySelectorAll(sel));
+const pad2 = n => String(n).padStart(2, "0");
+const icon = name => '<svg class="icon" aria-hidden="true"><use href="#i-' + name + '"></use></svg>';
+const esc = value => String(value == null ? "" : value).replace(/[&<>"']/g, ch => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" })[ch]);
+
+function shuffleArray(list) {
+  const arr = list.slice();
+  for (let i = arr.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [arr[i], arr[j]] = [arr[j], arr[i]];
+  }
+  return arr;
+}
+
+/* ---------------- Persistent store ---------------- */
+const STORE_KEY = "blossom-class8-deck-v1";
+const prefersDark = window.matchMedia && window.matchMedia("(prefers-color-scheme: dark)").matches;
+const defaultStore = {
+  theme: prefersDark ? "dark" : "light",
+  sfx: true,
+  speech: false,
+  mode: "mixed",
+  filter: "all",
+  shuffle: true,
+  records: {},
+  bookmarks: [],
+  stats: { attempts: 0, correct: 0 },
+  daily: { date: "", count: 0 },
+  days: []
+};
+
+function normaliseStoreFilters() {
+  if (store.filter === "saved" && (!store.bookmarks || store.bookmarks.length === 0)) store.filter = "all";
+}
+
+function loadStore() {
+  try {
+    const raw = localStorage.getItem(STORE_KEY);
+    if (!raw) return JSON.parse(JSON.stringify(defaultStore));
+    const parsed = JSON.parse(raw);
+    return {
+      ...JSON.parse(JSON.stringify(defaultStore)),
+      ...parsed,
+      stats: { ...defaultStore.stats, ...(parsed.stats || {}) },
+      daily: { ...defaultStore.daily, ...(parsed.daily || {}) },
+      records: parsed.records || {},
+      bookmarks: Array.isArray(parsed.bookmarks) ? parsed.bookmarks : [],
+      days: Array.isArray(parsed.days) ? parsed.days : []
+    };
+  } catch (err) {
+    return JSON.parse(JSON.stringify(defaultStore));
+  }
+}
+let store = loadStore();
+normaliseStoreFilters();
+
+function saveStore() {
+  try { localStorage.setItem(STORE_KEY, JSON.stringify(store)); } catch (err) { /* storage may be unavailable */ }
+}
+
+function localDateKey(date = new Date()) {
+  const y = date.getFullYear();
+  const m = pad2(date.getMonth() + 1);
+  const d = pad2(date.getDate());
+  return y + "-" + m + "-" + d;
+}
+
+function isExplored(id) {
+  return !!(store.records[id] && store.records[id].attempts > 0);
+}
+
+function getStreak() {
+  const active = new Set(store.days);
+  let cursor = new Date();
+  if (!active.has(localDateKey(cursor))) {
+    cursor.setDate(cursor.getDate() - 1);
+    if (!active.has(localDateKey(cursor))) return 0;
+  }
+  let streak = 0;
+  while (active.has(localDateKey(cursor))) {
+    streak += 1;
+    cursor.setDate(cursor.getDate() - 1);
+  }
+  return streak;
+}
+
+function stampDailyActivity() {
+  const today = localDateKey();
+  if (!store.daily || store.daily.date !== today) store.daily = { date: today, count: 0 };
+  store.daily.count += 1;
+  if (!store.days.includes(today)) store.days.push(today);
+  if (store.days.length > 240) store.days = store.days.slice(-240);
+}
+
+function recordAnswer(card, correct, chosen) {
+  const previous = store.records[card.id] || { attempts: 0, correctCount: 0 };
+  store.records[card.id] = {
+    attempts: previous.attempts + 1,
+    correctCount: (previous.correctCount || 0) + (correct ? 1 : 0),
+    lastCorrect: !!correct,
+    lastSeen: Date.now()
+  };
+  store.stats.attempts = (store.stats.attempts || 0) + 1;
+  if (correct) store.stats.correct = (store.stats.correct || 0) + 1;
+  stampDailyActivity();
+  saveStore();
+  renderStats();
+}
+
+/* ---------------- Audio feedback (Web Audio API) ---------------- */
+const Sound = (function () {
+  let ctx = null;
+  let unlocked = false;
+
+  function context() {
+    if (!ctx) {
+      const AudioCtor = window.AudioContext || window.webkitAudioContext;
+      if (!AudioCtor) return null;
+      ctx = new AudioCtor();
+    }
+    if (ctx.state === "suspended") ctx.resume().catch(() => {});
+    return ctx;
+  }
+
+  function tone(freq, start, duration, type, volume, endFreq) {
+    const ac = context();
+    if (!ac) return;
+    const osc = ac.createOscillator();
+    const gain = ac.createGain();
+    const t0 = ac.currentTime + start;
+    osc.type = type || "sine";
+    osc.frequency.setValueAtTime(freq, t0);
+    if (endFreq) osc.frequency.exponentialRampToValueAtTime(Math.max(40, endFreq), t0 + duration);
+    gain.gain.setValueAtTime(0.0001, t0);
+    gain.gain.exponentialRampToValueAtTime(volume || 0.12, t0 + 0.012);
+    gain.gain.exponentialRampToValueAtTime(0.0001, t0 + duration);
+    osc.connect(gain).connect(ac.destination);
+    osc.start(t0);
+    osc.stop(t0 + duration + 0.02);
+  }
+
+  function play(kind) {
+    if (!store.sfx) return;
+    if (!context()) return;
+    if (kind === "correct") {
+      tone(523.25, 0, 0.16, "sine", 0.1);
+      tone(659.25, 0.09, 0.18, "sine", 0.1);
+      tone(783.99, 0.19, 0.26, "sine", 0.09);
+    } else if (kind === "wrong") {
+      tone(192, 0, 0.16, "triangle", 0.075, 168);
+      tone(154, 0.13, 0.22, "triangle", 0.065, 128);
+    } else if (kind === "tap") {
+      tone(660, 0, 0.045, "triangle", 0.035);
+    } else if (kind === "select") {
+      tone(520, 0, 0.07, "sine", 0.045, 620);
+    } else if (kind === "drag") {
+      tone(420, 0, 0.05, "sine", 0.03);
+    } else if (kind === "drop") {
+      tone(300, 0, 0.11, "sine", 0.08, 200);
+    } else if (kind === "save") {
+      tone(783.99, 0, 0.09, "sine", 0.06);
+      tone(1046.5, 0.08, 0.14, "sine", 0.055);
+    } else if (kind === "win") {
+      [523.25, 659.25, 783.99, 1046.5].forEach((f, i) => tone(f, i * 0.11, 0.3, "sine", 0.085));
+    }
+  }
+
+  function unlock() {
+    if (unlocked) return;
+    unlocked = true;
+    context();
+  }
+  document.addEventListener("pointerdown", unlock, { once: true, passive: true });
+  return { play, unlock };
+})();
+
+/* ---------------- Speech synthesis ---------------- */
+let activeUtterance = null;
+function speechAvailable() { return "speechSynthesis" in window && "SpeechSynthesisUtterance" in window; }
+function stopSpeech() {
+  if (!speechAvailable()) return;
+  window.speechSynthesis.cancel();
+  activeUtterance = null;
+  const btn = $("#listenBtn");
+  if (btn) btn.classList.remove("speaking");
+}
+function speakText(text, button) {
+  if (!speechAvailable()) { showToast("Read aloud is not supported in this browser.", "help"); return; }
+  stopSpeech();
+  const utterance = new SpeechSynthesisUtterance(text);
+  utterance.lang = "en-IN";
+  utterance.rate = 0.92;
+  utterance.pitch = 1;
+  const voices = window.speechSynthesis.getVoices();
+  const preferred = voices.find(v => /en-IN|en-GB|en-US/i.test(v.lang) && /female|google|samantha|zira/i.test(v.name)) || voices.find(v => /^en/i.test(v.lang));
+  if (preferred) utterance.voice = preferred;
+  if (button) button.classList.add("speaking");
+  utterance.onend = () => { if (button) button.classList.remove("speaking"); activeUtterance = null; };
+  utterance.onerror = () => { if (button) button.classList.remove("speaking"); activeUtterance = null; };
+  activeUtterance = utterance;
+  window.speechSynthesis.speak(utterance);
+}
+
+/* ---------------- Toast ---------------- */
+let toastTimer = null;
+function showToast(message, iconName) {
+  const toast = $("#toast");
+  if (!toast) return;
+  $("#toastText").textContent = message;
+  const svg = toast.querySelector("svg use");
+  if (svg) svg.setAttribute("href", "#i-" + (iconName || "spark"));
+  toast.classList.add("show");
+  clearTimeout(toastTimer);
+  toastTimer = setTimeout(() => toast.classList.remove("show"), 3100);
+}
+
+/* ---------------- Theme + settings ---------------- */
+function applyTheme() {
+  const dark = store.theme === "dark";
+  document.documentElement.classList.toggle("dark", dark);
+  const meta = $("#metaTheme");
+  if (meta) meta.setAttribute("content", dark ? "#0d0f17" : "#f6f1e7");
+  const btn = $("#themeBtn");
+  if (btn) {
+    btn.setAttribute("aria-label", dark ? "Switch to light theme" : "Switch to dark theme");
+    btn.title = dark ? "Switch to light theme" : "Switch to dark theme";
+  }
+}
+function toggleTheme() {
+  store.theme = store.theme === "dark" ? "light" : "dark";
+  applyTheme();
+  saveStore();
+  Sound.play("tap");
+}
+function applySoundState() {
+  document.body.classList.toggle("sfx-muted", !store.sfx);
+  const btn = $("#soundBtn");
+  if (btn) {
+    btn.setAttribute("aria-pressed", String(!!store.sfx));
+    btn.setAttribute("aria-label", store.sfx ? "Mute sound effects" : "Unmute sound effects");
+    btn.title = store.sfx ? "Mute sound effects" : "Unmute sound effects";
+  }
+  const sw = $("#sfxSwitch");
+  if (sw) sw.setAttribute("aria-checked", String(!!store.sfx));
+}
+function applySpeechState() {
+  const sw = $("#speechSwitch");
+  if (sw) sw.setAttribute("aria-checked", String(!!store.speech));
+}
+function syncSettingsUI() {
+  applyTheme();
+  applySoundState();
+  applySpeechState();
+}
+function toggleSfx() {
+  store.sfx = !store.sfx;
+  saveStore();
+  applySoundState();
+  if (store.sfx) {
+    Sound.unlock();
+    Sound.play("select");
+    showToast("Sound effects on. You will hear a chime for correct answers.", "volume");
+  } else {
+    showToast("Sound effects muted. Focus mode: on.", "volume-off");
+  }
+}
+function toggleSpeech() {
+  store.speech = !store.speech;
+  saveStore();
+  applySpeechState();
+  if (store.speech) {
+    Sound.unlock();
+    showToast("Auto read is on. New cards will be read aloud.", "headphones");
+    if (session && $("#screen-study") && !$("#screen-study").classList.contains("is-hidden")) speakCard();
+  } else {
+    stopSpeech();
+    showToast("Auto read is off. You can still tap the speaker on any card.", "volume");
+  }
+}
+
+/* ---------------- Deck helpers ---------------- */
+const MODE_LABEL = { mixed: "Everything", mcq: "MCQ only", fill: "Drag & drop" };
+const MODE_COUNT_LABEL = { mixed: "cards", mcq: "MCQs", fill: "word blocks" };
+
+function modeMatches(card) {
+  return store.mode === "mixed" || card.type === store.mode;
+}
+function getPool(opts) {
+  return bank.filter(q => {
+    if (opts.subject && q.subject !== opts.subject) return false;
+    if (opts.topic && q.topic !== opts.topic) return false;
+    if (opts.mode && opts.mode !== "mixed" && q.type !== opts.mode) return false;
+    if (opts.savedOnly && !store.bookmarks.includes(q.id)) return false;
+    if (opts.unseenOnly && isExplored(q.id)) return false;
+    return true;
+  });
+}
+function deckCardCount(subject, topic) {
+  const extra = store.filter === "saved" ? { savedOnly: true } : store.filter === "unseen" ? { unseenOnly: true } : {};
+  return getPool({ subject, topic, mode: store.mode, ...extra }).length;
+}
+function deckMastery(subject, topic) {
+  const cards = getPool({ subject, topic, mode: store.mode });
+  if (!cards.length) return { explored: 0, total: 0, pct: 0 };
+  const explored = cards.filter(c => isExplored(c.id)).length;
+  return { explored, total: cards.length, pct: Math.round((explored / cards.length) * 100) };
+}
+function grammarIndex(topic) { return TOPIC_ORDER.indexOf(topic) + 1; }
+
+/* ---------------- Home rendering ---------------- */
+let searchQuery = "";
+function renderStats() {
+  const total = bank.length;
+  const explored = Object.keys(store.records).filter(id => store.records[id] && store.records[id].attempts > 0).length;
+  const accuracy = store.stats.attempts ? Math.round((store.stats.correct / store.stats.attempts) * 100) : 0;
+  const saved = store.bookmarks.length;
+  const daily = store.daily && store.daily.date === localDateKey() ? store.daily.count : 0;
+  const circumference = 163.36;
+  const progress = Math.min(daily / 10, 1) * circumference;
+
+  const set = (sel, value) => { const el = $(sel); if (el) el.textContent = value; };
+  set("#heroCardCount", total);
+  set("#heroSavedCount", saved);
+  set("#metricAccuracy", store.stats.attempts ? accuracy + "%" : "—");
+  set("#metricExplored", explored);
+  set("#metricSaved", saved);
+  set("#dailyCount", Math.min(daily, 10));
+  const ring = $("#dailyRing");
+  if (ring) ring.style.strokeDasharray = progress + " " + circumference;
+  const streak = getStreak();
+  const streakLabel = $("#streakLabel");
+  if (streakLabel) streakLabel.textContent = streak > 0 ? streak + "-day streak · keep it warm" : "Start a streak today";
+  const totalLine = $("#librarySummary");
+  if (totalLine) {
+    const litCount = bank.filter(q => q.subject === "literature").length;
+    const gramCount = bank.filter(q => q.subject === "grammar").length;
+    totalLine.textContent = total + " cards in the library · " + litCount + " literature · " + gramCount + " grammar · saved automatically";
+  }
+  set("#studySavedHint", saved);
+}
+
+function lessonCardMarkup(key) {
+  const meta = LESSONS[key];
+  const count = deckCardCount("literature", key);
+  const mastery = deckMastery("literature", key);
+  const savedHere = bank.filter(q => q.subject === "literature" && q.topic === key && store.bookmarks.includes(q.id)).length;
+  const empty = count === 0;
+  return '<button class="deck-card' + (empty ? ' is-empty' : '') + '" style="--deck:' + meta.color + '" data-start-topic="' + key + '" data-start-subject="literature" aria-label="Study ' + esc(meta.title) + ' — ' + count + ' ' + MODE_COUNT_LABEL[store.mode] + '"' + (empty ? ' disabled' : '') + '>'
+    + (store.filter === "saved" ? '<span class="save-pill">' + icon("bookmark") + savedHere + '</span>' : '')
+    + '<span class="deck-top">'
+    + '<span class="deck-icon">' + icon(meta.icon) + '</span>'
+    + '<span class="deck-meta"><span class="deck-overline">Lesson ' + meta.lesson + '<span class="dot"></span>' + esc(meta.genre) + '</span>'
+    + '<span class="deck-title">' + esc(meta.title) + '</span>'
+    + '<span class="deck-author">' + esc(meta.author) + '</span></span>'
+    + '</span>'
+    + '<span class="deck-progress"><span class="progress-track"><span class="progress-fill" style="width:' + mastery.pct + '%"></span></span><span>' + mastery.explored + '/' + mastery.total + '</span></span>'
+    + '<span class="deck-foot"><span class="deck-count"><b>' + count + '</b> ' + MODE_COUNT_LABEL[store.mode] + (empty ? ' · all explored' : '') + '</span><span class="deck-go">' + icon("arrow-right") + '</span></span>'
+    + '</button>';
+}
+
+function grammarCardMarkup(key, index) {
+  const meta = TOPICS[key];
+  const count = deckCardCount("grammar", key);
+  const mastery = deckMastery("grammar", key);
+  const savedHere = bank.filter(q => q.subject === "grammar" && q.topic === key && store.bookmarks.includes(q.id)).length;
+  const empty = count === 0;
+  return '<button class="grammar-card' + (empty ? ' is-empty' : '') + '" data-start-topic="' + key + '" data-start-subject="grammar" aria-label="Study ' + esc(meta.label) + ' — ' + count + ' cards"' + (empty ? ' disabled' : '') + '>'
+    + '<span class="grammar-card-top"><span class="grammar-icon">' + icon(meta.icon) + '</span><span class="grammar-num">' + (store.filter === "saved" ? icon("bookmark") + savedHere : pad2(grammarIndex(key))) + '</span></span>'
+    + '<span class="grammar-title">' + esc(meta.label) + '</span>'
+    + '<span class="grammar-bottom"><span><b>' + count + '</b> ' + (empty ? 'all explored' : MODE_COUNT_LABEL[store.mode]) + '</span>' + icon("chevron-right") + '</span>'
+    + '</button>';
+}
+
+function renderLibrary() {
+  const q = searchQuery.trim().toLowerCase();
+  const lessons = LESSON_ORDER.filter(key => {
+    const meta = LESSONS[key];
+    const haystack = [meta.title, meta.author, meta.genre, "lesson " + meta.lesson].join(" ").toLowerCase();
+    return !q || haystack.includes(q);
+  });
+  const topics = TOPIC_ORDER.filter(key => {
+    const meta = TOPICS[key];
+    return !q || (meta.label + " " + meta.short + " " + meta.desc).toLowerCase().includes(q);
+  });
+  const litGrid = $("#litGrid");
+  const grammarGrid = $("#grammarGrid");
+  if (litGrid) litGrid.innerHTML = lessons.map(lessonCardMarkup).join("");
+  if (grammarGrid) grammarGrid.innerHTML = topics.map(grammarCardMarkup).join("");
+  const litEmpty = $("#litEmpty");
+  const grammarEmpty = $("#grammarEmpty");
+  if (litEmpty) litEmpty.classList.toggle("is-hidden", lessons.length > 0);
+  if (grammarEmpty) grammarEmpty.classList.toggle("is-hidden", topics.length > 0);
+  const library = $("#library");
+  const grammarSection = $("#grammarSection");
+  if (library) library.hidden = false;
+  if (grammarSection) grammarSection.hidden = false;
+  $$("[data-filter]").forEach(chip => {
+    const active = chip.dataset.filter === store.filter;
+    chip.classList.toggle("is-active", active);
+    chip.setAttribute("aria-pressed", String(active));
+  });
+  syncModeButtons();
+  const quickLabel = $("#quickStartLabel");
+  if (quickLabel) quickLabel.textContent = store.mode === "mixed" ? "Start a 20-card mix" : store.mode === "mcq" ? "Start 20 MCQs" : "Start 20 drag & drop";
+  const shuffle = $("#shuffleToggle");
+  if (shuffle) {
+    shuffle.setAttribute("aria-pressed", String(!!store.shuffle));
+    shuffle.classList.toggle("is-active", !!store.shuffle);
+  }
+  renderStats();
+}
+
+function renderHome() { renderLibrary(); }
+
+function syncModeButtons() {
+  $$("[data-mode]").forEach(btn => {
+    const active = btn.dataset.mode === store.mode;
+    btn.classList.toggle("is-active", active);
+    btn.setAttribute("aria-pressed", String(active));
+  });
+}
+
+/* ---------------- Session state ---------------- */
+let session = null;
+
+const CHOICE_LETTERS = ["A", "B", "C", "D"];
+const STUDY_TIPS = [
+  "Read the question twice. One small word — since, but, who — often changes the whole answer.",
+  "Say the full sentence aloud with your chosen word. Your ear often catches the error before your eye does.",
+  "In grammar, identify the subject first. Verb forms and voice changes follow the subject.",
+  "For poetry, ask what is being compared with what. The device is usually hiding in plain sight.",
+  "For every wrong answer, read the explanation once, then say the correct answer in your own words.",
+  "Spaced repetition beats cramming: come back to your saved cards tomorrow, not just tonight."
+];
+
+function currentCard() {
+  return session ? session.cards[session.idx] : null;
+}
+function isAnswerLocked() {
+  const card = currentCard();
+  return !!(session && card && session.responses[card.id]);
+}
+function cardAccent(card) {
+  return card.subject === "literature" ? LESSONS[card.topic].color : "var(--primary)";
+}
+function optionOrder(card) {
+  if (!session.optionOrders[card.id]) {
+    session.optionOrders[card.id] = shuffleArray(card.options.map((_, index) => index));
+  }
+  return session.optionOrders[card.id];
+}
+function sessionModeLabel() {
+  if (!session) return MODE_LABEL[store.mode];
+  return session.modeLabel || MODE_LABEL[session.mode] || "Mixed";
+}
+
+/* ---------------- Screen management ---------------- */
+function showScreen(name) {
+  ["home", "study", "results"].forEach(screenName => {
+    const el = $("#screen-" + screenName);
+    if (el) el.classList.toggle("is-hidden", screenName !== name);
+  });
+  document.body.classList.toggle("studying", name !== "home");
+  $$(".nav-link").forEach(link => {
+    const target = link.dataset.goto;
+    link.classList.toggle("is-active", (name === "home" && target === "home"));
+  });
+  $$(".bottom-btn").forEach(btn => btn.classList.remove("is-active"));
+  if (name === "home") {
+    const homeBtn = $('.bottom-btn[data-bottom="home"]');
+    if (homeBtn) homeBtn.classList.add("is-active");
+  }
+  stopSpeech();
+  window.scrollTo({ top: 0, behavior: "auto" });
+}
+
+function goHome() {
+  stopSpeech();
+  session = null;
+  showScreen("home");
+  renderHome();
+}
+
+/* ---------------- Starting sessions ---------------- */
+function launchSession(cards, meta) {
+  if (!cards || !cards.length) {
+    showToast("No cards in this deck yet. Try another mode or filter.", "search");
+    return;
+  }
+  session = {
+    cards: cards,
+    idx: 0,
+    responses: {},
+    correct: 0,
+    missed: 0,
+    streak: 0,
+    bestStreak: 0,
+    optionOrders: {},
+    wordOrders: {},
+    title: meta.title || "Study deck",
+    subtitle: meta.subtitle || "",
+    modeLabel: meta.modeLabel || MODE_LABEL[store.mode],
+    startedAt: Date.now()
+  };
+  showScreen("study");
+  renderCard();
+}
+
+function startSession(opts) {
+  const options = opts || {};
+  const cards = getPool({
+    subject: options.subject,
+    topic: options.topic,
+    mode: options.mode || store.mode,
+    savedOnly: !!options.savedOnly,
+    unseenOnly: !!options.unseenOnly
+  });
+  if (!cards.length) {
+    if (options.savedOnly) showToast("No saved cards yet. Tap the bookmark on any flashcard to keep it here.", "bookmark");
+    else showToast("You have explored every card here. Try another mode or the full library.", "check");
+    return;
+  }
+  let deck = options.preserveOrder || !store.shuffle ? cards.slice() : shuffleArray(cards);
+  if (typeof options.limit === "number") deck = deck.slice(0, options.limit);
+  launchSession(deck, {
+    title: options.title || "Study deck",
+    subtitle: options.subtitle || (deck.length + " cards · " + MODE_LABEL[store.mode]),
+    modeLabel: options.modeLabel
+  });
+}
+
+function startQuickMix() {
+  const pool = getPool({ mode: store.mode });
+  if (!pool.length) { showToast("No cards available in this mode.", "search"); return; }
+  let cards = store.shuffle ? shuffleArray(pool) : pool.slice();
+  cards = cards.slice(0, 20);
+  launchSession(cards, {
+    title: "Smart mix",
+    subtitle: cards.length + " cards from the seven texts and nine grammar topics",
+    modeLabel: MODE_LABEL[store.mode]
+  });
+}
+
+function startSaved() {
+  const pool = getPool({ mode: store.mode, savedOnly: true });
+  if (!pool.length) {
+    showToast("Your saved stack is empty. Tap the bookmark on any card to add one.", "bookmark");
+    return;
+  }
+  startSession({
+    savedOnly: true,
+    title: "Saved stack",
+    subtitle: pool.length + " bookmarked " + (pool.length === 1 ? "card" : "cards") + " · " + MODE_LABEL[store.mode]
+  });
+}
+
+function startTopic(topic, subject) {
+  const meta = subject === "literature" ? LESSONS[topic] : TOPICS[topic];
+  if (!meta) return;
+  const savedOnly = store.filter === "saved";
+  const unseenOnly = store.filter === "unseen";
+  startSession({
+    topic: topic,
+    subject: subject,
+    savedOnly: savedOnly,
+    unseenOnly: unseenOnly,
+    title: meta.title || meta.label,
+    subtitle: subject === "literature" ? meta.genre + " · " + meta.author : meta.desc
+  });
+}
+
+/* ---------------- Card rendering ---------------- */
+function renderCard() {
+  if (!session) return;
+  stopSpeech();
+  const card = currentCard();
+  if (!card) { finishSession(); return; }
+  const response = session.responses[card.id];
+  const flashcard = $("#flashcard");
+  if (flashcard) {
+    flashcard.style.setProperty("--card-accent", cardAccent(card));
+    flashcard.classList.remove("card-reveal");
+    void flashcard.offsetWidth;
+    flashcard.classList.add("card-reveal");
+  }
+  const meta = card.subject === "literature" ? LESSONS[card.topic] : TOPICS[card.topic];
+  const chips = $("#cardTags");
+  if (chips) {
+    chips.innerHTML =
+      '<span class="tag lesson">' + icon(meta.icon) + " " + (card.subject === "literature" ? "Lesson " + meta.lesson : esc(meta.short)) + "</span>" +
+      '<span class="tag type-' + card.type + '">' + icon(card.type === "mcq" ? "brain" : "grip") + " " + (card.type === "mcq" ? "Multiple choice" : "Drag &amp; drop") + "</span>";
+  }
+  const bookmarkBtn = $("#bookmarkBtn");
+  if (bookmarkBtn) {
+    const saved = store.bookmarks.includes(card.id);
+    bookmarkBtn.classList.toggle("saved", saved);
+    bookmarkBtn.setAttribute("aria-pressed", String(saved));
+    bookmarkBtn.setAttribute("aria-label", saved ? "Remove card from saved" : "Save this card");
+    bookmarkBtn.title = saved ? "Remove from saved" : "Save this card";
+  }
+
+  $("#studyTitle").textContent = session.title;
+  $("#studySub").textContent = session.subtitle;
+  $("#studyModePill").innerHTML = icon("layers") + " " + esc(sessionModeLabel());
+
+  const content = $("#cardContent");
+  const indexLine = '<div class="card-index"><span>Question ' + pad2(session.idx + 1) + '</span><span class="line"></span><span>' + esc(card.shortTitle) + '</span><span class="pts">' + icon(card.type === "mcq" ? "target" : "grip") + (card.type === "mcq" ? "Pick one" : "Fill the gap") + "</span></div>";
+
+  if (card.type === "mcq") {
+    const order = optionOrder(card);
+    content.innerHTML = indexLine +
+      '<h2 class="question-text" id="qText">' + esc(card.q) + "</h2>" +
+      '<div class="options-grid" role="group" aria-label="Choose one answer">' +
+      order.map((actual, position) => {
+        return '<button type="button" class="option" data-option-index="' + actual + '" aria-pressed="false">' +
+          '<span class="option-letter">' + CHOICE_LETTERS[position] + "</span>" +
+          '<span class="option-text">' + esc(card.options[actual]) + "</span>" +
+          '<span class="option-mark">' + icon("check") + "</span>" +
+          "</button>";
+      }).join("") + "</div>" +
+      '<div class="fill-instruction">' + icon("bulb") + " Take your time. Read every option before you choose." + "</div>";
+  } else {
+    const segments = card.q.split("____");
+    const before = segments.shift() || "";
+    const after = segments.join("____");
+    const order = optionOrder(card);
+    content.innerHTML = indexLine +
+      '<h2 class="question-text" id="qText">Complete the sentence.</h2>' +
+      '<div class="fill-instruction">' + icon("grip") + " Drag the right word block into the blank — or tap a word to place it." + "</div>" +
+      '<p class="fill-sentence" id="fillSentence">' + esc(before) +
+      '<span class="dropzone" id="dropZone" role="button" tabindex="0" aria-label="Drop the correct word here"><span class="placeholder">' + icon("grip") + " drop word</span></span>" +
+      esc(after) + "</p>" +
+      '<div class="word-bank-label"><span>Word blocks</span><button type="button" data-clear-answer aria-label="Clear the blank">Clear</button></div>' +
+      '<div class="word-bank" id="wordBank">' +
+      order.map(actual => '<button type="button" class="word-chip" draggable="true" data-word-index="' + actual + '">' + esc(card.options[actual]) + "</button>").join("") +
+      "</div>" +
+      '<div class="drag-note">' + icon("grip") + " Drag and drop works with a mouse. On touch screens, a tap is quicker." + "</div>";
+  }
+
+  hideFeedback();
+  if (response) {
+    if (card.type === "mcq") paintMCQ(card, response.chosen, response.correct);
+    else paintFill(card, response.chosen, response.correct);
+    showFeedback(response.correct, response.chosen, true);
+  }
+  updateSessionChrome();
+  updateNextButton();
+  if (store.speech) {
+    setTimeout(() => { if (session && currentCard() === card) speakCard(); }, 320);
+  }
+}
+
+/* ---------------- Answer evaluation ---------------- */
+function commitAnswer(correct, chosenText) {
+  const card = currentCard();
+  if (!card || session.responses[card.id]) return;
+  session.responses[card.id] = { correct: !!correct, chosen: chosenText };
+  if (correct) {
+    session.correct += 1;
+    session.streak += 1;
+    session.bestStreak = Math.max(session.bestStreak, session.streak);
+  } else {
+    session.missed += 1;
+    session.streak = 0;
+  }
+  recordAnswer(card, !!correct, chosenText);
+  showFeedback(!!correct, chosenText, false);
+  Sound.play(correct ? "correct" : "wrong");
+  if (navigator.vibrate) { try { navigator.vibrate(correct ? [18, 40, 18] : 70); } catch (err) {} }
+  updateSessionChrome();
+  updateNextButton();
+  setTimeout(() => {
+    const next = $("#nextBtn");
+    if (!next) return;
+    const box = next.getBoundingClientRect();
+    if (box.bottom > window.innerHeight - 12 || box.top < 0) {
+      next.scrollIntoView({ behavior: "smooth", block: "center" });
+    }
+  }, 130);
+}
+
+function paintMCQ(card, chosen, correct) {
+  const chosenText = typeof chosen === "number" ? card.options[chosen] : chosen;
+  $$("#cardContent .option").forEach(btn => {
+    btn.disabled = true;
+    const actual = Number(btn.dataset.optionIndex);
+    const isCorrect = actual === card.answer;
+    const isChosen = btn.querySelector(".option-text").textContent === chosenText;
+    btn.classList.remove("is-selected");
+    if (isCorrect) btn.classList.add("is-correct");
+    else if (isChosen) { btn.classList.add("is-wrong"); btn.querySelector(".option-mark").innerHTML = icon("x"); }
+    else btn.classList.add("is-dim");
+    if (isCorrect) btn.querySelector(".option-mark").innerHTML = icon("check");
+    btn.setAttribute("aria-pressed", String(isChosen));
+  });
+}
+
+function paintFill(card, chosen, correct) {
+  const slot = $("#dropZone");
+  if (!slot) return;
+  slot.className = "dropzone filled " + (correct ? "correct" : "wrong");
+  slot.innerHTML = esc(chosen);
+  const chips = $$("#cardContent .word-chip");
+  chips.forEach(chip => {
+    chip.disabled = true;
+    chip.classList.add("used");
+    const word = card.options[Number(chip.dataset.wordIndex)];
+    if (word === chosen) chip.classList.add("used");
+    if (!correct && word === card.answerText) chip.classList.add("reveal");
+    if (correct && word === card.answerText) chip.classList.add("reveal");
+  });
+}
+
+function placeWord(optionIndex) {
+  const card = currentCard();
+  if (!card || card.type !== "fill" || !session || session.responses[card.id]) return;
+  const word = card.options[optionIndex];
+  if (!word) return;
+  const slot = $("#dropZone");
+  if (!slot) return;
+  const correct = word === card.answerText;
+  paintFill(card, word, correct);
+  commitAnswer(correct, word);
+}
+
+function showFeedback(correct, chosen, revisiting) {
+  const card = currentCard();
+  const fb = $("#feedback");
+  if (!fb || !card) return;
+  const answer = card.answerText;
+  const titles = correct
+    ? ["Correct — nicely done.", "Yes, that is it.", "Exactly right.", "Sharp thinking."]
+    : ["Not quite — now you know.", "Almost. Let us lock it in.", "A good miss to learn from.", "Close, but not this time."];
+  const title = titles[session.idx % titles.length];
+  const chosenLine = !correct ? '<p>You chose <span class="answer-line">' + esc(chosen) + '</span>. The correct answer is <span class="answer-line">' + esc(answer) + "</span>.</p>" : '<p>You selected <span class="answer-line">' + esc(answer) + "</span>. Keep that reasoning.</p>";
+  const streak = correct && session.streak > 1 ? '<span class="streak-pop">' + icon("flame") + session.streak + " in a row</span>" : "";
+  fb.className = "feedback " + (correct ? "is-correct" : "is-wrong");
+  fb.innerHTML = '<div class="feedback-head">' +
+    '<span class="feedback-icon">' + icon(correct ? "check" : "x") + "</span>" +
+    "<div><div class=\"feedback-title\">" + esc(title) + "</div>" + chosenLine + "</div>" +
+    "</div>" +
+    '<div class="explain">' + icon("bulb") + "<span>" + esc(card.explanation) + (revisiting ? " · previously answered" : "") + "</span></div>" +
+    (streak ? '<div class="feedback-actions">' + streak + "</div>" : "");
+  fb.classList.remove("is-hidden");
+}
+
+function hideFeedback() {
+  const fb = $("#feedback");
+  if (!fb) return;
+  fb.className = "feedback is-hidden";
+  fb.innerHTML = "";
+}
+
+function updateNextButton() {
+  const card = currentCard();
+  const response = card ? session.responses[card.id] : null;
+  const nextBtn = $("#nextBtn");
+  const prevBtn = $("#prevBtn");
+  if (!nextBtn || !card) return;
+  nextBtn.disabled = !response;
+  prevBtn.disabled = session.idx === 0;
+  const last = session.idx === session.cards.length - 1;
+  let label;
+  if (!response) label = card.type === "fill" ? "Place a word" : "Choose an answer";
+  else label = last ? "See results" : "Next card";
+  $("#nextLabel").textContent = label;
+}
+
+function updateSessionChrome() {
+  if (!session) return;
+  const total = session.cards.length;
+  const answered = Object.keys(session.responses).length;
+  const percent = total ? Math.round((answered / total) * 100) : 0;
+  $("#studyCurrent").textContent = session.idx + 1;
+  $("#studyTotal").textContent = total;
+  $("#studyPercent").textContent = percent + "%";
+  $("#studyProgress").style.width = percent + "%";
+  const bar = $("#studyProgressBar");
+  if (bar) bar.setAttribute("aria-valuenow", String(percent));
+  $("#asideCorrect").textContent = session.correct;
+  $("#asideWrong").textContent = session.missed;
+  $("#asideStreak").textContent = session.streak;
+  $("#asidePercent").textContent = percent + "%";
+  $("#asideProgress").style.width = percent + "%";
+  const tip = $("#asideTip");
+  if (tip) tip.innerHTML = STUDY_TIPS[session.idx % STUDY_TIPS.length];
+}
+
+/* ---------------- Navigation within a session ---------------- */
+function goPrevious() {
+  if (!session || session.idx === 0) return;
+  session.idx -= 1;
+  Sound.play("tap");
+  renderCard();
+  const study = $("#screen-study");
+  if (study) window.scrollTo({ top: Math.max(0, window.scrollY + study.getBoundingClientRect().top - 76), behavior: "smooth" });
+}
+function goNext() {
+  if (!session) return;
+  const card = currentCard();
+  if (!card) return;
+  if (!session.responses[card.id]) {
+    showToast(card.type === "fill" ? "Drag or tap a word into the blank first." : "Choose one option first.", "bulb");
+    return;
+  }
+  if (session.idx >= session.cards.length - 1) {
+    finishSession();
+  } else {
+    session.idx += 1;
+    Sound.play("tap");
+    renderCard();
+    const study = $("#screen-study");
+    if (study) window.scrollTo({ top: Math.max(0, window.scrollY + study.getBoundingClientRect().top - 76), behavior: "smooth" });
+  }
+}
+
+/* ---------------- Results ---------------- */
+function finishSession() {
+  if (!session) return;
+  const total = session.cards.length;
+  const correct = session.correct;
+  const percent = total ? Math.round((correct / total) * 100) : 0;
+  const ring = 351.86;
+  let headline = "Every flip counts.";
+  let message = "The cards you missed are listed below. Read each explanation once, then try them again.";
+  if (percent === 100) { headline = "Flawless finish."; message = "Every single card, right. Your revision is clearly working — come back tomorrow to keep it fresh."; }
+  else if (percent >= 80) { headline = "Beautifully done."; message = "A strong session. Review the few tricky ones below and you will be exam-ready."; }
+  else if (percent >= 60) { headline = "A solid session."; message = "The basics are settling in. A second look at the missed cards will make the difference."; }
+  else if (percent >= 35) { headline = "Good start, scholar."; message = "Every explanation is a small lesson. Retry the missed cards while the ideas are fresh."; }
+  const ringFill = Math.round((percent / 100) * ring);
+  const missed = session.cards.filter(card => session.responses[card.id] && !session.responses[card.id].correct);
+  const answered = session.cards.filter(card => session.responses[card.id]).length;
+
+  $("#resultHero").innerHTML =
+    '<span class="result-emoji">' + icon(percent >= 60 ? "trophy" : "spark") + "</span>" +
+    '<div class="eyebrow">Session complete</div>' +
+    '<h1 id="resultTitle">' + esc(headline) + "</h1>" +
+    "<p>" + esc(message) + "</p>" +
+    '<div class="score-ring-wrap">' +
+    '<svg viewBox="0 0 132 132" aria-hidden="true"><circle class="score-ring-track" cx="66" cy="66" r="56"></circle><circle class="score-ring-fill" id="resultRing" cx="66" cy="66" r="56" stroke-dasharray="0 ' + ring + '"></circle></svg>' +
+    '<div class="score-center"><b>' + correct + '<small>/' + total + "</small></b><span>correct</span></div>" +
+    "</div>" +
+    '<div class="result-metrics">' +
+    '<div class="result-metric"><b>' + percent + '%</b><span>accuracy</span></div>' +
+    '<div class="result-metric"><b>' + missed.length + '</b><span>to revisit</span></div>' +
+    '<div class="result-metric"><b>' + session.bestStreak + '</b><span>best streak</span></div>' +
+    "</div>" +
+    '<div class="result-actions">' +
+    '<button class="btn btn-primary" data-result-action="mix">' + icon("spark") + " New mixed deck</button>" +
+    (missed.length ? '<button class="btn btn-soft" data-result-action="retry">' + icon("refresh") + " Retry missed (" + missed.length + ")</button>" : "") +
+    '<button class="btn btn-ghost" data-result-action="home">' + icon("grid") + " Back to library</button>" +
+    "</div>";
+
+  const review = $("#reviewSection");
+  if (missed.length) {
+    review.innerHTML = '<div class="review-section-head"><h2>Answers to revisit</h2><span>' + missed.length + " of " + answered + " answered</span></div>" +
+      '<div class="review-list">' + missed.map(card => {
+        const response = session.responses[card.id];
+        return '<div class="review-card">' +
+          '<div class="review-q"><span class="status">' + icon("x") + "</span><span>" + esc(card.q) + "</span></div>" +
+          '<div class="review-answers"><span>Your answer: <b>' + esc(response.chosen) + "</b></span><span>Correct answer: <b class=\"right\">" + esc(card.answerText) + "</b></span></div>" +
+          '<div class="review-explain">' + esc(card.explanation) + "</div>" +
+          "</div>";
+      }).join("") + "</div>";
+  } else {
+    review.innerHTML = '<div class="review-section-head"><h2>Review</h2><span>Clean sheet</span></div>' +
+      '<div class="empty-perfect">' + icon("star") + "<h3>No corrections needed</h3><p>Every card in this session was answered correctly. Try a tougher mix or revisit this deck in a few days.</p></div>";
+  }
+
+  session.finalPercent = percent;
+  session.finalMissed = missed;
+  showScreen("results");
+  requestAnimationFrame(() => {
+    const ringEl = $("#resultRing");
+    if (ringEl) ringEl.style.strokeDasharray = ringFill + " " + ring;
+  });
+  Sound.play("win");
+  if (percent >= 80) launchConfetti();
+}
+
+function launchConfetti() {
+  const container = $("#confetti");
+  if (!container) return;
+  const colors = ["#f0b45f", "#4c43c7", "#2c7a58", "#d98b2b", "#9a78c9", "#6f9fd8"];
+  container.innerHTML = "";
+  for (let i = 0; i < 42; i++) {
+    const piece = document.createElement("i");
+    piece.style.left = Math.random() * 100 + "%";
+    piece.style.background = colors[i % colors.length];
+    piece.style.setProperty("--dx", (Math.random() * 180 - 90) + "px");
+    piece.style.setProperty("--rot", (Math.random() * 900 - 450) + "deg");
+    piece.style.animationDelay = (Math.random() * 0.5) + "s";
+    piece.style.animationDuration = (2.1 + Math.random() * 1.4) + "s";
+    piece.style.opacity = String(0.55 + Math.random() * 0.45);
+    if (i % 3 === 0) piece.style.borderRadius = "50%";
+    container.appendChild(piece);
+  }
+  setTimeout(() => { container.innerHTML = ""; }, 4300);
+}
+
+function retryMissed() {
+  if (!session || !session.finalMissed || !session.finalMissed.length) {
+    showToast("No missed cards to retry. Start a new mix!", "trophy");
+    return;
+  }
+  const cards = session.finalMissed.slice();
+  launchSession(cards, {
+    title: "Retry missed",
+    subtitle: cards.length + " " + (cards.length === 1 ? "card" : "cards") + " for a second look",
+    modeLabel: sessionModeLabel()
+  });
+}
+
+/* ---------------- Reading aloud ---------------- */
+function speakCard() {
+  const card = currentCard();
+  if (!card) return;
+  const optionText = " Options are: " + card.options.join(", ") + ".";
+  const questionText = card.q.replace(/_{2,}/g, " blank ");
+  speakText(questionText + " " + optionText, $("#listenBtn"));
+}
+function toggleBookmark() {
+  const card = currentCard();
+  if (!card) return;
+  const index = store.bookmarks.indexOf(card.id);
+  const saved = index === -1;
+  if (saved) store.bookmarks.push(card.id);
+  else store.bookmarks.splice(index, 1);
+  saveStore();
+  const btn = $("#bookmarkBtn");
+  if (btn) {
+    btn.classList.toggle("saved", saved);
+    btn.setAttribute("aria-pressed", String(saved));
+    btn.setAttribute("aria-label", saved ? "Remove card from saved" : "Save this card");
+    btn.title = saved ? "Remove from saved" : "Save this card";
+  }
+  Sound.play(saved ? "save" : "tap");
+  showToast(saved ? "Saved to your stack for later." : "Removed from saved cards.", saved ? "bookmark" : "x");
+  renderStats();
+}
+
+/* ---------------- Study event listeners ---------------- */
+function bindStudyEvents() {
+  $("#prevBtn").addEventListener("click", goPrevious);
+  $("#nextBtn").addEventListener("click", goNext);
+  $("#studyBack").addEventListener("click", goHome);
+  $("#bookmarkBtn").addEventListener("click", toggleBookmark);
+  $("#listenBtn").addEventListener("click", () => {
+    Sound.unlock();
+    Sound.play("tap");
+    speakCard();
+  });
+  $("#sfxSwitch").addEventListener("click", toggleSfx);
+  $("#speechSwitch").addEventListener("click", toggleSpeech);
+
+  const content = $("#cardContent");
+  content.addEventListener("click", event => {
+    const option = event.target.closest("[data-option-index]");
+    if (option && session && !isAnswerLocked()) {
+      const card = currentCard();
+      const actual = Number(option.dataset.optionIndex);
+      Sound.play("select");
+      paintMCQ(card, actual, actual === card.answer);
+      commitAnswer(actual === card.answer, card.options[actual]);
+      return;
+    }
+    const chip = event.target.closest("[data-word-index]");
+    if (chip && session && !isAnswerLocked()) {
+      Sound.play("drop");
+      placeWord(Number(chip.dataset.wordIndex));
+      return;
+    }
+    const clear = event.target.closest("[data-clear-answer]");
+    if (clear && session && !isAnswerLocked()) {
+      const slot = $("#dropZone");
+      if (slot) {
+        slot.className = "dropzone";
+        slot.innerHTML = '<span class="placeholder">' + icon("grip") + " drop word</span>";
+      }
+      Sound.play("tap");
+      return;
+    }
+    const zone = event.target.closest("#dropZone");
+    if (zone && session && !isAnswerLocked()) {
+      showToast("Drag a word block into this gap — or tap a word below.", "grip");
+    }
+  });
+
+  content.addEventListener("keydown", event => {
+    if (event.key === "Enter" || event.key === " ") {
+      const zone = event.target.closest("#dropZone");
+      if (zone) {
+        event.preventDefault();
+        showToast("Choose a word block below to fill the gap.", "grip");
+      }
+    }
+  });
+
+  content.addEventListener("dragstart", event => {
+    const chip = event.target.closest(".word-chip");
+    if (!chip || isAnswerLocked()) { event.preventDefault(); return; }
+    chip.classList.add("dragging");
+    if (event.dataTransfer) {
+      event.dataTransfer.effectAllowed = "move";
+      event.dataTransfer.setData("text/plain", chip.dataset.wordIndex);
+    }
+    Sound.play("drag");
+  });
+  content.addEventListener("dragend", event => {
+    const chip = event.target.closest(".word-chip");
+    if (chip) chip.classList.remove("dragging");
+    const zone = $("#dropZone");
+    if (zone) zone.classList.remove("drag-over");
+  });
+  content.addEventListener("dragover", event => {
+    const zone = event.target.closest("#dropZone");
+    if (!zone) return;
+    event.preventDefault();
+    if (event.dataTransfer) event.dataTransfer.dropEffect = "move";
+    zone.classList.add("drag-over");
+  });
+  content.addEventListener("dragleave", event => {
+    const zone = event.target.closest("#dropZone");
+    if (zone && !zone.contains(event.relatedTarget)) zone.classList.remove("drag-over");
+  });
+  content.addEventListener("drop", event => {
+    const zone = event.target.closest("#dropZone");
+    if (!zone) return;
+    event.preventDefault();
+    zone.classList.remove("drag-over");
+    if (isAnswerLocked()) return;
+    const raw = event.dataTransfer ? event.dataTransfer.getData("text/plain") : "";
+    const index = Number(raw);
+    if (!Number.isNaN(index) && raw !== "") {
+      Sound.play("drop");
+      placeWord(index);
+    }
+  });
+}
+
+/* ---------------- Home event listeners ---------------- */
+function bindHomeEvents() {
+  $("#themeBtn").addEventListener("click", toggleTheme);
+  $("#soundBtn").addEventListener("click", toggleSfx);
+  $("#brandHome").addEventListener("click", goHome);
+  $("#quickStart").addEventListener("click", () => { Sound.unlock(); Sound.play("tap"); startQuickMix(); });
+  $("#savedStart").addEventListener("click", startSaved);
+  $("#savedLibraryBtn").addEventListener("click", startSaved);
+  $("#shuffleToggle").addEventListener("click", () => {
+    store.shuffle = !store.shuffle;
+    saveStore();
+    renderLibrary();
+    Sound.play("tap");
+    showToast(store.shuffle ? "Cards will be shuffled." : "Cards will appear in textbook order.", "shuffle");
+  });
+  $("#soundDemo").addEventListener("click", () => {
+    if (!store.sfx) {
+      store.sfx = true;
+      saveStore();
+      applySoundState();
+    }
+    Sound.unlock();
+    Sound.play("correct");
+    showToast("That is the correct-answer chime. Gentle, not distracting.", "volume");
+  });
+  $("#deckSearch").addEventListener("input", event => {
+    searchQuery = event.target.value;
+    renderLibrary();
+  });
+  $$("[data-mode]").forEach(btn => btn.addEventListener("click", () => {
+    store.mode = btn.dataset.mode;
+    saveStore();
+    renderLibrary();
+    Sound.play("tap");
+  }));
+  $$("[data-filter]").forEach(btn => btn.addEventListener("click", () => {
+    store.filter = btn.dataset.filter;
+    saveStore();
+    searchQuery = "";
+    const search = $("#deckSearch");
+    if (search) search.value = "";
+    renderLibrary();
+    Sound.play("tap");
+    if (store.filter === "saved" && store.bookmarks.length === 0) {
+      showToast("No saved cards yet — tap the bookmark on any flashcard.", "bookmark");
+    }
+    if (store.filter === "grammar" || store.filter === "literature") {
+      const target = store.filter === "grammar" ? $("#grammarSection") : $("#library");
+      if (target) setTimeout(() => target.scrollIntoView({ behavior: "smooth", block: "start" }), 60);
+    }
+  }));
+  $$("[data-goto]").forEach(btn => btn.addEventListener("click", () => {
+    const target = btn.dataset.goto;
+    if (target === "mix") {
+      Sound.unlock();
+      startQuickMix();
+    } else if (target === "grammar") {
+      showScreen("home");
+      store.filter = "all";
+      saveStore();
+      renderLibrary();
+      const grammar = $("#grammarSection");
+      if (grammar) setTimeout(() => grammar.scrollIntoView({ behavior: "smooth", block: "start" }), 40);
+    } else {
+      goHome();
+    }
+  }));
+  $$(".bottom-btn").forEach(btn => btn.addEventListener("click", () => {
+    const target = btn.dataset.bottom;
+    if (target === "mix") { Sound.unlock(); startQuickMix(); }
+    else if (target === "saved") startSaved();
+    else if (target === "grammar") {
+      showScreen("home");
+      store.filter = "all";
+      saveStore();
+      renderLibrary();
+      const grammar = $("#grammarSection");
+      if (grammar) setTimeout(() => grammar.scrollIntoView({ behavior: "smooth", block: "start" }), 40);
+    } else {
+      goHome();
+    }
+  }));
+
+  document.addEventListener("click", event => {
+    const startBtn = event.target.closest("[data-start-topic]");
+    if (startBtn && !startBtn.disabled) {
+      Sound.unlock();
+      Sound.play("tap");
+      startTopic(startBtn.dataset.startTopic, startBtn.dataset.startSubject);
+    }
+    const resultBtn = event.target.closest("[data-result-action]");
+    if (resultBtn) {
+      const action = resultBtn.dataset.resultAction;
+      Sound.unlock();
+      if (action === "mix") startQuickMix();
+      else if (action === "retry") retryMissed();
+      else { Sound.play("tap"); goHome(); }
+    }
+  });
+}
+
+/* ---------------- Keyboard shortcuts ---------------- */
+function bindKeyboard() {
+  document.addEventListener("keydown", event => {
+    const studyOpen = !$("#screen-study").classList.contains("is-hidden");
+    if (!studyOpen || !session) return;
+    const tag = (event.target.tagName || "").toLowerCase();
+    if (tag === "input" || tag === "textarea" || tag === "select") return;
+    if (event.metaKey || event.ctrlKey || event.altKey) return;
+    const key = event.key.toLowerCase();
+    const card = currentCard();
+    if (!card) return;
+
+    if (key === "arrowleft") { event.preventDefault(); goPrevious(); return; }
+    if (key === "arrowright") { event.preventDefault(); if (!$("#nextBtn").disabled) goNext(); return; }
+    if (key === "enter" && !event.target.closest("button")) {
+      if (!$("#nextBtn").disabled) { event.preventDefault(); goNext(); }
+      return;
+    }
+    if (key === "s") { event.preventDefault(); toggleBookmark(); return; }
+    if (key === "l") { event.preventDefault(); Sound.play("tap"); speakCard(); return; }
+    if (["1", "2", "3", "4"].includes(key) && !isAnswerLocked()) {
+      if (card.type === "mcq") {
+        const options = $$("#cardContent .option");
+        const chosen = options[Number(key) - 1];
+        if (chosen) { event.preventDefault(); chosen.click(); }
+      } else {
+        const chips = $$("#cardContent .word-chip:not(.used)");
+        const chosen = chips[Number(key) - 1];
+        if (chosen) { event.preventDefault(); chosen.click(); }
+      }
+    }
+  });
+}
+
+/* ---------------- Boot ---------------- */
+function init() {
+  syncSettingsUI();
+  renderHome();
+  showScreen("home");
+  bindHomeEvents();
+  bindStudyEvents();
+  bindKeyboard();
+  if (!speechAvailable()) {
+    const listen = $("#listenBtn");
+    if (listen) listen.title = "Speech is not available in this browser";
+  }
+}
+init();
+
+</script>
+</body>
+</html>
